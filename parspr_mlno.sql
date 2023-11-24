@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cards` (
+  `id` int(11) NOT NULL,
   `Bank` varchar(255) NOT NULL,
   `Date` date NOT NULL,
   `Product` varchar(20) NOT NULL,
@@ -76,7 +77,6 @@ CREATE TABLE `cards` (
   `Field_5` date NOT NULL,
   `Field_6` varchar(255) NOT NULL,
   `Field_7` varchar(255) NOT NULL,
-  `id` int(11) NOT NULL,
   `createdAt` date NOT NULL,
   `updatedAt` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -85,11 +85,11 @@ CREATE TABLE `cards` (
 -- Dumping data for table `cards`
 --
 
-INSERT INTO `cards` (`Bank`, `Date`, `Product`, `Logo`, `Scheme`, `Name`, `Address1`, `Address2`, `Address3`, `City`, `State`, `Pin`, `Mobile`, `Other_Contact`, `Reference_No`, `AWB_No`, `RTO_Address1`, `RTO_Address2`, `RTO_Address3`, `RTO_City`, `RTO_State`, `RTO_Pin`, `Office_Address1`, `Office_Address2`, `Office_Address3`, `Office_City`, `Office_State`, `Office_Pin`, `PA_Flag`, `NRWC_Flag`, `Priority`, `Third_Party`, `Bureau_Code`, `Courier_Code`, `Form_Factor`, `Comments`, `Personalized_NonPersonalized`, `Individual_Bulk_Break`, `Sub_Customer`, `Status`, `If_PULL`, `Field_1`, `Field_2`, `Field_3`, `Field_4`, `Field_5`, `Field_6`, `Field_7`, `id`, `createdAt`, `updatedAt`) VALUES
-('icici', '2023-10-10', 'Visa Platinum', 'FPL', 'JCB', 'Rajesh', 'add1', 'add2', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'ref123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', 1, '0000-00-00', '0000-00-00'),
-('icici', '2023-11-10', 'Visa Platinum', 'FPL', 'JCB', 'Rajesh1', 'add11', 'add12', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'ref1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', 2, '0000-00-00', '0000-00-00'),
-('icici', '2023-11-10', 'Visa Platinum', 'FPL', 'JCB', 'Khushbu', 'add11', 'add12', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'kh1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', 3, '0000-00-00', '0000-00-00'),
-('icici', '2023-09-10', 'Visa Platinum', 'FPL', 'JCB', 'Khushbu', 'add113', 'add122', 'add33', 'noida', 'UP', 201301, 999999999, 999999991, 'kh1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', 4, '0000-00-00', '0000-00-00');
+INSERT INTO `cards` ('id', `Bank`, `Date`, `Product`, `Logo`, `Scheme`, `Name`, `Address1`, `Address2`, `Address3`, `City`, `State`, `Pin`, `Mobile`, `Other_Contact`, `Reference_No`, `AWB_No`, `RTO_Address1`, `RTO_Address2`, `RTO_Address3`, `RTO_City`, `RTO_State`, `RTO_Pin`, `Office_Address1`, `Office_Address2`, `Office_Address3`, `Office_City`, `Office_State`, `Office_Pin`, `PA_Flag`, `NRWC_Flag`, `Priority`, `Third_Party`, `Bureau_Code`, `Courier_Code`, `Form_Factor`, `Comments`, `Personalized_NonPersonalized`, `Individual_Bulk_Break`, `Sub_Customer`, `Status`, `If_PULL`, `Field_1`, `Field_2`, `Field_3`, `Field_4`, `Field_5`, `Field_6`, `Field_7`, `createdAt`, `updatedAt`) VALUES
+(1, 'icici', '2023-10-10', 'Visa Platinum', 'FPL', 'JCB', 'Rajesh', 'add1', 'add2', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'ref123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', '2023-11-20', '2023-11-20'),
+(2, 'icici', '2023-11-10', 'Visa Platinum', 'FPL', 'JCB', 'Rajesh1', 'add11', 'add12', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'ref1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', '2023-11-20', '2023-11-20'),
+(3, 'icici', '2023-11-10', 'Visa Platinum', 'FPL', 'JCB', 'Khushbu', 'add11', 'add12', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'kh1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', '2023-11-20', '2023-11-20'),
+(4, 'icici', '2023-09-10', 'Visa Platinum', 'FPL', 'JCB', 'Khushbu', 'add113', 'add122', 'add33', 'noida', 'UP', 201301, 999999999, 999999991, 'kh1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', '2023-11-20', '2023-11-20');
 
 -- --------------------------------------------------------
 
@@ -155,11 +155,30 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `createdAt`, `update
 --
 
 CREATE TABLE `user_roles` (
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
   `roleId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL
+  `userId` int(11) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audit_logs`
+--
+
+CREATE TABLE `audit_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cardId` varchar(255) DEFAULT NULL,
+  `previous` varchar() NOT NULL,
+  `current` varchar() NOT NULL,
+  `createdBy` varchar(255) NOT NULL,
+  `modifiedBy` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Indexes for dumped tables
