@@ -168,7 +168,7 @@ CREATE TABLE `user_roles` (
 --
 
 CREATE TABLE `audit_logs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `cardId` varchar(255) DEFAULT NULL,
   `previous` varchar(10000) NOT NULL,
   `current` varchar(10000) NOT NULL,
@@ -216,6 +216,12 @@ ALTER TABLE `user_roles`
   ADD KEY `userId` (`userId`);
 
 --
+-- Indexes for table `audit_logs`
+--
+ALTER TABLE `audit_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -236,6 +242,12 @@ ALTER TABLE `cardsupdates`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `audit_logs`
+--
+ALTER TABLE `audit_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Constraints for dumped tables
