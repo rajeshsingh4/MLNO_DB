@@ -170,8 +170,8 @@ CREATE TABLE `user_roles` (
 CREATE TABLE `audit_logs` (
   `id` int(11) NOT NULL,
   `cardId` varchar(255) DEFAULT NULL,
-  `previous` varchar(10000) NOT NULL,
-  `current` varchar(10000) NOT NULL,
+  `previous` varchar(255) NOT NULL,
+  `current` varchar(255) NOT NULL,
   `createdBy` varchar(255) NOT NULL,
   `modifiedBy` varchar(255) NOT NULL,
   `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
