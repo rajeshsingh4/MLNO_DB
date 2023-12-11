@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2023 at 05:48 AM
+-- Generation Time: Dec 11, 2023 at 01:07 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `parspr_mlno`
 --
+CREATE DATABASE IF NOT EXISTS `parspr_mlno` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `parspr_mlno`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `audit_logs`
+--
+
+DROP TABLE IF EXISTS `audit_logs`;
+CREATE TABLE `audit_logs` (
+  `id` int(11) NOT NULL,
+  `cardId` int(11) DEFAULT NULL,
+  `previous` varchar(255) DEFAULT NULL,
+  `current` varchar(255) DEFAULT NULL,
+  `createdBy` varchar(255) DEFAULT NULL,
+  `modifiedBy` varchar(255) DEFAULT NULL,
+  `createdAt` datetime DEFAULT '2023-12-10 08:15:05',
+  `updatedAt` datetime DEFAULT '2023-12-10 08:15:05'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -27,69 +47,182 @@ SET time_zone = "+00:00";
 -- Table structure for table `cards`
 --
 
+DROP TABLE IF EXISTS `cards`;
 CREATE TABLE `cards` (
   `id` int(11) NOT NULL,
-  `Bank` varchar(255) NOT NULL,
-  `Date` date NOT NULL,
-  `Product` varchar(20) NOT NULL,
-  `Logo` varchar(5) NOT NULL,
-  `Scheme` varchar(10) NOT NULL,
-  `Name` varchar(255) NOT NULL,
-  `Address1` varchar(255) NOT NULL,
-  `Address2` varchar(255) NOT NULL,
-  `Address3` varchar(255) NOT NULL,
-  `City` varchar(50) NOT NULL,
-  `State` varchar(50) NOT NULL,
-  `Pin` int(6) NOT NULL,
-  `Mobile` int(10) NOT NULL,
-  `Other_Contact` int(10) NOT NULL,
-  `Reference_No` varchar(20) NOT NULL,
-  `AWB_No` varchar(20) NOT NULL,
-  `RTO_Address1` varchar(255) NOT NULL,
-  `RTO_Address2` varchar(255) NOT NULL,
-  `RTO_Address3` varchar(255) NOT NULL,
-  `RTO_City` varchar(50) NOT NULL,
-  `RTO_State` varchar(20) NOT NULL,
-  `RTO_Pin` int(6) NOT NULL,
-  `Office_Address1` varchar(255) NOT NULL,
-  `Office_Address2` varchar(255) NOT NULL,
-  `Office_Address3` varchar(255) NOT NULL,
-  `Office_City` varchar(50) NOT NULL,
-  `Office_State` varchar(20) NOT NULL,
-  `Office_Pin` int(6) NOT NULL,
-  `PA_Flag` varchar(1) NOT NULL,
-  `NRWC_Flag` varchar(1) NOT NULL,
-  `Priority` varchar(1) NOT NULL,
-  `Third_Party` varchar(100) NOT NULL,
-  `Bureau_Code` varchar(10) NOT NULL,
-  `Courier_Code` varchar(10) NOT NULL,
-  `Form_Factor` varchar(1) NOT NULL,
-  `Comments` varchar(255) NOT NULL,
-  `Personalized_NonPersonalized` varchar(1) NOT NULL,
-  `Individual_Bulk_Break` varchar(1) NOT NULL,
-  `Sub_Customer` varchar(10) NOT NULL,
-  `Status` int(2) NOT NULL,
-  `If_PULL` int(2) NOT NULL,
-  `Field_1` varchar(255) NOT NULL,
-  `Field_2` varchar(255) NOT NULL,
-  `Field_3` int(11) NOT NULL,
-  `Field_4` int(11) NOT NULL,
-  `Field_5` date NOT NULL,
-  `Field_6` varchar(255) NOT NULL,
-  `Field_7` varchar(255) NOT NULL,
-  `createdAt` date NOT NULL,
-  `updatedAt` date NOT NULL
+  `Bank` varchar(255) DEFAULT NULL,
+  `Date` datetime DEFAULT NULL,
+  `Product` varchar(255) DEFAULT NULL,
+  `Logo` varchar(255) DEFAULT NULL,
+  `Scheme` varchar(255) DEFAULT NULL,
+  `Name` varchar(255) DEFAULT NULL,
+  `Address1` varchar(255) DEFAULT NULL,
+  `Address2` varchar(255) DEFAULT NULL,
+  `Address3` varchar(255) DEFAULT NULL,
+  `City` varchar(255) DEFAULT NULL,
+  `State` varchar(255) DEFAULT NULL,
+  `Pin` varchar(255) DEFAULT NULL,
+  `Mobile` varchar(255) DEFAULT NULL,
+  `Other_Contact` varchar(255) DEFAULT NULL,
+  `Reference_No` datetime DEFAULT NULL,
+  `AWB_No` datetime DEFAULT NULL,
+  `RTO_Address1` datetime DEFAULT NULL,
+  `RTO_Address2` datetime DEFAULT NULL,
+  `RTO_Address3` datetime DEFAULT NULL,
+  `RTO_City` datetime DEFAULT NULL,
+  `RTO_State` datetime DEFAULT NULL,
+  `RTO_Pin` datetime DEFAULT NULL,
+  `Office_Address1` datetime DEFAULT NULL,
+  `Office_Address2` datetime DEFAULT NULL,
+  `Office_Address3` datetime DEFAULT NULL,
+  `Office_City` datetime DEFAULT NULL,
+  `Office_State` datetime DEFAULT NULL,
+  `Office_Pin` datetime DEFAULT NULL,
+  `PA_Flag` datetime DEFAULT NULL,
+  `NRWC_Flag` varchar(10) DEFAULT NULL,
+  `Priority` datetime DEFAULT NULL,
+  `Third_Party` datetime DEFAULT NULL,
+  `Bureau_Code` datetime DEFAULT NULL,
+  `Courier_Code` datetime DEFAULT NULL,
+  `Form_Factor` datetime DEFAULT NULL,
+  `Comments` datetime DEFAULT NULL,
+  `Personalized_NonPersonalized` datetime DEFAULT NULL,
+  `Individual_Bulk_Break` datetime DEFAULT NULL,
+  `Sub_Customer` varchar(255) DEFAULT NULL,
+  `Status` datetime DEFAULT NULL,
+  `If_PULL` datetime DEFAULT NULL,
+  `Field_1` datetime DEFAULT NULL,
+  `Field_2` datetime DEFAULT NULL,
+  `Field_3` datetime DEFAULT NULL,
+  `Field_4` datetime DEFAULT NULL,
+  `Field_5` datetime DEFAULT NULL,
+  `Field_6` varchar(255) DEFAULT NULL,
+  `Field_7` datetime DEFAULT NULL,
+  `createdAt` datetime DEFAULT '2023-12-10 08:15:05',
+  `updatedAt` datetime DEFAULT '2023-12-10 08:15:05',
+  `fileMasterId` int(11) DEFAULT NULL,
+  `Bureau_Status` int(11) NOT NULL DEFAULT 0,
+  `Courier_Status` int(11) NOT NULL DEFAULT 0,
+  `Bureau_Status_Timestamp` datetime NOT NULL DEFAULT current_timestamp(),
+  `Courier_Status_Timestamp` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cards`
 --
 
-INSERT INTO `cards` (`id`, `Bank`, `Date`, `Product`, `Logo`, `Scheme`, `Name`, `Address1`, `Address2`, `Address3`, `City`, `State`, `Pin`, `Mobile`, `Other_Contact`, `Reference_No`, `AWB_No`, `RTO_Address1`, `RTO_Address2`, `RTO_Address3`, `RTO_City`, `RTO_State`, `RTO_Pin`, `Office_Address1`, `Office_Address2`, `Office_Address3`, `Office_City`, `Office_State`, `Office_Pin`, `PA_Flag`, `NRWC_Flag`, `Priority`, `Third_Party`, `Bureau_Code`, `Courier_Code`, `Form_Factor`, `Comments`, `Personalized_NonPersonalized`, `Individual_Bulk_Break`, `Sub_Customer`, `Status`, `If_PULL`, `Field_1`, `Field_2`, `Field_3`, `Field_4`, `Field_5`, `Field_6`, `Field_7`, `createdAt`, `updatedAt`) VALUES
-(1, 'icici', '2023-10-10', 'Visa Platinum', 'FPL', 'JCB', 'Rajesh', 'add1', 'add2', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'ref123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', '2023-11-20', '2023-11-20'),
-(2, 'icici', '2023-11-10', 'Visa Platinum', 'FPL', 'JCB', 'Rajesh1', 'add11', 'add12', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'ref1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', '2023-11-20', '2023-11-20'),
-(3, 'icici', '2023-11-10', 'Visa Platinum', 'FPL', 'JCB', 'Khushbu', 'add11', 'add12', 'add3', 'noida', 'UP', 201301, 999999999, 999999991, 'kh1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', '2023-11-20', '2023-11-20'),
-(4, 'icici', '2023-09-10', 'Visa Platinum', 'FPL', 'JCB', 'Khushbu', 'add113', 'add122', 'add33', 'noida', 'UP', 201301, 999999999, 999999991, 'kh1123', 'awb123', 'rtoadd1', 'rtoadd2', 'rtoadd3', 'rtocity', 'rtostate', 201301, 'officeadd1', 'officeadd2', 'officeadd3', 'office_city', 'officestate', 123456, 'P', 'N', 'N', '3rdparty', 'bcode1', 'courier_1', 'D', 'test comments', 'P', 'I', 'sub_custom', 3, 0, 'fld1', 'fld2', 3, 4, '2023-10-16', 'fld6', 'fld7', '2023-11-20', '2023-11-20');
+INSERT INTO `cards` (`id`, `Bank`, `Date`, `Product`, `Logo`, `Scheme`, `Name`, `Address1`, `Address2`, `Address3`, `City`, `State`, `Pin`, `Mobile`, `Other_Contact`, `Reference_No`, `AWB_No`, `RTO_Address1`, `RTO_Address2`, `RTO_Address3`, `RTO_City`, `RTO_State`, `RTO_Pin`, `Office_Address1`, `Office_Address2`, `Office_Address3`, `Office_City`, `Office_State`, `Office_Pin`, `PA_Flag`, `NRWC_Flag`, `Priority`, `Third_Party`, `Bureau_Code`, `Courier_Code`, `Form_Factor`, `Comments`, `Personalized_NonPersonalized`, `Individual_Bulk_Break`, `Sub_Customer`, `Status`, `If_PULL`, `Field_1`, `Field_2`, `Field_3`, `Field_4`, `Field_5`, `Field_6`, `Field_7`, `createdAt`, `updatedAt`, `fileMasterId`, `Bureau_Status`, `Courier_Status`, `Bureau_Status_Timestamp`, `Courier_Status_Timestamp`) VALUES
+(1, 'HDFC', '2023-12-11 09:19:33', 'Platinum', 'GPL', 'AMEX', 'tempore', 'Address1_ut', 'Address2_id', 'Address3_ut', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 9, 3, 1, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(2, 'HDFC', '2023-12-11 09:19:33', 'VISA Master', 'PPL', 'VISA', 'tenetur', 'Address1_id', 'Address2_in', 'Address3_ut', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 7, 0, 2, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(3, 'IDFC', '2023-12-11 09:19:33', 'Platinum', 'FPL', 'MC', 'aliquam', 'Address1_et', 'Address2_et', 'Address3_in', 'Add_c_et', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 3, 2, 2, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(4, 'IDFC', '2023-12-11 09:19:33', 'VISA Master', 'FPL', 'AMEX', 'dolorum', 'Address1_ut', 'Address2_id', 'Address3_et', 'Add_c_id', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1, 2, 5, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(5, 'HDFC', '2023-12-11 09:19:33', 'Platinum', 'FPL', 'CUP', 'quaerat', 'Address1_et', 'Address2_ut', 'Address3_ut', 'Add_c_ea', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 7, 1, 0, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(6, 'IDFC', '2023-12-11 09:19:33', 'VISA Master', 'GPL', 'CUP', 'aliquam', 'Address1_ut', 'Address2_et', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 6, 5, 0, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(7, 'SBI', '2023-12-11 09:19:33', 'Platinum', 'FPL', 'VISA', 'ducimus', 'Address1_et', 'Address2_ut', 'Address3_ut', 'Add_c_et', 'Address_s_ea', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 10, 0, 5, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(8, 'SBI', '2023-12-11 09:19:33', 'VISA Master', 'FPL', 'AMEX', 'nostrum', 'Address1_in', 'Address2_ad', 'Address3_et', 'Add_c_ut', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 5, 4, 2, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(9, 'HDFC', '2023-12-11 09:19:33', 'VISA Master', 'GPL', 'CUP', 'ducimus', 'Address1_et', 'Address2_ut', 'Address3_in', 'Add_c_ex', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 4, 5, 1, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(10, 'SBI', '2023-12-11 09:19:33', 'Platinum', 'GPL', 'JCB', 'ducimus', 'Address1_ea', 'Address2_ex', 'Address3_et', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 4, 1, 2, '2023-12-11 09:19:33', '2023-12-11 09:19:33'),
+(11, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'MC', 'dolores', 'Address1_ea', 'Address2_et', 'Address3_id', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-02 05:44:48', '2023-12-10 08:15:05', 7, 2, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(12, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'JCB', 'aliquam', 'Address1_et', 'Address2_ut', 'Address3_in', 'Add_c_in', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-02 23:21:28', '2023-12-10 08:15:05', 1, 0, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(13, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'JCB', 'ratione', 'Address1_et', 'Address2_et', 'Address3_ea', 'Add_c_et', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-06 18:55:48', '2023-12-10 08:15:05', 2, 5, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(14, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'CUP', 'tempore', 'Address1_ex', 'Address2_ad', 'Address3_at', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-28 06:55:01', '2023-12-10 08:15:05', 2, 2, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(15, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'CUP', 'ratione', 'Address1_ea', 'Address2_ex', 'Address3_ut', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-20 09:02:09', '2023-12-10 08:15:05', 3, 5, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(16, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'MC', 'aliquam', 'Address1_et', 'Address2_ut', 'Address3_in', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-08 12:50:45', '2023-12-10 08:15:05', 3, 4, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(17, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'CUP', 'dolorum', 'Address1_ex', 'Address2_ea', 'Address3_et', 'Add_c_id', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-27 16:17:35', '2023-12-10 08:15:05', 3, 3, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(18, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'VISA', 'placeat', 'Address1_et', 'Address2_id', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-15 13:14:58', '2023-12-10 08:15:05', 6, 4, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(19, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'CUP', 'debitis', 'Address1_ea', 'Address2_ab', 'Address3_in', 'Add_c_id', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-04 22:32:31', '2023-12-10 08:15:05', 7, 5, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(20, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'MC', 'ducimus', 'Address1_at', 'Address2_in', 'Address3_ea', 'Add_c_et', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-01 18:21:42', '2023-12-10 08:15:05', 8, 5, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(21, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'CUP', 'ratione', 'Address1_ut', 'Address2_ut', 'Address3_et', 'Add_c_et', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-25 12:18:59', '2023-12-10 08:15:05', 2, 1, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(22, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'CUP', 'placeat', 'Address1_ea', 'Address2_in', 'Address3_ut', 'Add_c_ut', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-23 14:56:08', '2023-12-10 08:15:05', 9, 0, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(23, 'IDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'VISA', 'nostrum', 'Address1_ut', 'Address2_ea', 'Address3_et', 'Add_c_id', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-13 09:40:11', '2023-12-10 08:15:05', 7, 1, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(24, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'AMEX', 'tempore', 'Address1_ex', 'Address2_id', 'Address3_id', 'Add_c_ad', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-05 11:39:01', '2023-12-10 08:15:05', 1, 1, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(25, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'VISA', 'quaerat', 'Address1_et', 'Address2_et', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-06 22:17:15', '2023-12-10 08:15:05', 4, 2, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(26, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'VISA', 'dolores', 'Address1_ad', 'Address2_ex', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-18 04:00:23', '2023-12-10 08:15:05', 7, 5, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(27, 'IDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'JCB', 'placeat', 'Address1_et', 'Address2_et', 'Address3_in', 'Add_c_et', 'Address_s_ex', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-24 05:30:04', '2023-12-10 08:15:05', 8, 2, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(28, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'AMEX', 'placeat', 'Address1_et', 'Address2_et', 'Address3_et', 'Add_c_ut', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-01 20:41:21', '2023-12-10 08:15:05', 7, 5, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(29, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'AMEX', 'commodi', 'Address1_ut', 'Address2_et', 'Address3_ut', 'Add_c_id', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-19 10:19:42', '2023-12-10 08:15:05', 6, 2, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(30, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'AMEX', 'aliquam', 'Address1_et', 'Address2_ab', 'Address3_et', 'Add_c_ut', 'Address_s_ea', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-15 16:10:02', '2023-12-10 08:15:05', 5, 5, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(31, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'MC', 'dolores', 'Address1_ex', 'Address2_ut', 'Address3_ea', 'Add_c_ad', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-11 07:17:48', '2023-12-10 08:15:05', 10, 5, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(32, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'VISA', 'nostrum', 'Address1_et', 'Address2_et', 'Address3_ut', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-13 11:32:10', '2023-12-10 08:15:05', 3, 0, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(33, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'CUP', 'dolorem', 'Address1_et', 'Address2_ab', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-09 02:22:04', '2023-12-10 08:15:05', 1, 2, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(34, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'MC', 'ratione', 'Address1_in', 'Address2_in', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-03 07:10:45', '2023-12-10 08:15:05', 7, 1, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(35, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'VISA', 'quaerat', 'Address1_id', 'Address2_et', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-04 16:47:17', '2023-12-10 08:15:05', 1, 1, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(36, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'CUP', 'ratione', 'Address1_et', 'Address2_et', 'Address3_id', 'Add_c_ut', 'Address_s_ea', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-07 12:00:40', '2023-12-10 08:15:05', 8, 3, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(37, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'MC', 'numquam', 'Address1_ut', 'Address2_ut', 'Address3_ea', 'Add_c_ex', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-19 07:18:54', '2023-12-10 08:15:05', 6, 0, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(38, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'CUP', 'laborum', 'Address1_et', 'Address2_et', 'Address3_id', 'Add_c_ut', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-06 10:20:12', '2023-12-10 08:15:05', 1, 1, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(39, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'VISA', 'tempore', 'Address1_ea', 'Address2_et', 'Address3_et', 'Add_c_ea', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-17 20:24:33', '2023-12-10 08:15:05', 10, 3, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(40, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'AMEX', 'aperiam', 'Address1_ad', 'Address2_et', 'Address3_et', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-08 02:48:35', '2023-12-10 08:15:05', 1, 5, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(41, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'MC', 'tempore', 'Address1_ut', 'Address2_id', 'Address3_et', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-26 03:12:36', '2023-12-10 08:15:05', 7, 3, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(42, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'MC', 'aliquid', 'Address1_ab', 'Address2_at', 'Address3_et', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-06 13:55:37', '2023-12-10 08:15:05', 8, 3, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(43, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'VISA', 'commodi', 'Address1_et', 'Address2_id', 'Address3_ab', 'Add_c_ut', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-15 20:27:48', '2023-12-10 08:15:05', 5, 3, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(44, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'VISA', 'numquam', 'Address1_ad', 'Address2_et', 'Address3_ut', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-28 08:38:35', '2023-12-10 08:15:05', 10, 5, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(45, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'MC', 'officia', 'Address1_id', 'Address2_in', 'Address3_ut', 'Add_c_et', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-27 04:57:04', '2023-12-10 08:15:05', 8, 2, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(46, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'JCB', 'numquam', 'Address1_ut', 'Address2_et', 'Address3_in', 'Add_c_et', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-27 11:03:13', '2023-12-10 08:15:05', 8, 3, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(47, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'VISA', 'tempore', 'Address1_ea', 'Address2_ut', 'Address3_at', 'Add_c_in', 'Address_s_ea', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-24 12:53:32', '2023-12-10 08:15:05', 7, 3, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(48, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'AMEX', 'commodi', 'Address1_ut', 'Address2_et', 'Address3_id', 'Add_c_at', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-08 01:21:59', '2023-12-10 08:15:05', 6, 3, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(49, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'CUP', 'officia', 'Address1_et', 'Address2_ut', 'Address3_et', 'Add_c_ut', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-10 00:25:23', '2023-12-10 08:15:05', 4, 5, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(50, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'JCB', 'facilis', 'Address1_et', 'Address2_ut', 'Address3_ut', 'Add_c_ut', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-02 10:57:04', '2023-12-10 08:15:05', 6, 5, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(51, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'JCB', 'numquam', 'Address1_ut', 'Address2_ea', 'Address3_ut', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-18 22:56:07', '2023-12-10 08:15:05', 1, 3, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(52, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'JCB', 'tenetur', 'Address1_et', 'Address2_et', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 19:38:34', '2023-12-10 08:15:05', 8, 4, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(53, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'JCB', 'tempore', 'Address1_id', 'Address2_in', 'Address3_et', 'Add_c_ut', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-03 14:46:51', '2023-12-10 08:15:05', 2, 4, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(54, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'MC', 'officia', 'Address1_et', 'Address2_ut', 'Address3_ut', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-26 07:56:20', '2023-12-10 08:15:05', 2, 3, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(55, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'CUP', 'eveniet', 'Address1_et', 'Address2_at', 'Address3_ad', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-19 14:37:12', '2023-12-10 08:15:05', 9, 2, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(56, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'AMEX', 'dolores', 'Address1_ad', 'Address2_ex', 'Address3_et', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-21 05:54:00', '2023-12-10 08:15:05', 5, 1, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(57, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'AMEX', 'commodi', 'Address1_ad', 'Address2_in', 'Address3_ex', 'Add_c_id', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-04 21:49:56', '2023-12-10 08:15:05', 6, 3, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(58, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'CUP', 'numquam', 'Address1_et', 'Address2_ut', 'Address3_in', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-31 12:23:37', '2023-12-10 08:15:05', 6, 1, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(59, 'IDFC', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'CUP', 'commodi', 'Address1_et', 'Address2_ut', 'Address3_ut', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-25 15:23:30', '2023-12-10 08:15:05', 2, 5, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(60, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'JCB', 'ducimus', 'Address1_et', 'Address2_ea', 'Address3_et', 'Add_c_ad', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-07 15:02:19', '2023-12-10 08:15:05', 3, 5, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(61, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'CUP', 'tempora', 'Address1_et', 'Address2_ut', 'Address3_at', 'Add_c_ea', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-01 13:30:48', '2023-12-10 08:15:05', 1, 2, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(62, 'IDFC', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'JCB', 'aperiam', 'Address1_at', 'Address2_et', 'Address3_ad', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-18 02:01:59', '2023-12-10 08:15:05', 8, 4, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(63, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'AMEX', 'ducimus', 'Address1_ut', 'Address2_ea', 'Address3_et', 'Add_c_ea', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-23 08:25:22', '2023-12-10 08:15:05', 2, 4, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(64, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'AMEX', 'aperiam', 'Address1_id', 'Address2_et', 'Address3_ut', 'Add_c_et', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-23 10:27:13', '2023-12-10 08:15:05', 5, 4, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(65, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'VISA', 'officia', 'Address1_et', 'Address2_ea', 'Address3_et', 'Add_c_ea', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-23 09:33:32', '2023-12-10 08:15:05', 3, 4, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(66, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'CUP', 'quaerat', 'Address1_et', 'Address2_ea', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-20 03:23:42', '2023-12-10 08:15:05', 8, 1, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(67, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'VISA', 'debitis', 'Address1_et', 'Address2_et', 'Address3_in', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-15 22:39:38', '2023-12-10 08:15:05', 8, 3, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(68, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'MC', 'numquam', 'Address1_id', 'Address2_et', 'Address3_ut', 'Add_c_et', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-21 12:33:41', '2023-12-10 08:15:05', 6, 3, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(69, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'VISA', 'eveniet', 'Address1_et', 'Address2_ut', 'Address3_et', 'Add_c_ad', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-18 23:58:50', '2023-12-10 08:15:05', 10, 1, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(70, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'CUP', 'debitis', 'Address1_et', 'Address2_ab', 'Address3_et', 'Add_c_ab', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-08 18:08:39', '2023-12-10 08:15:05', 10, 4, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(71, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'CUP', 'maiores', 'Address1_et', 'Address2_in', 'Address3_ut', 'Add_c_in', 'Address_s_ea', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-19 03:42:32', '2023-12-10 08:15:05', 1, 4, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(72, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'VISA', 'dolorum', 'Address1_et', 'Address2_et', 'Address3_et', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-17 03:36:04', '2023-12-10 08:15:05', 5, 0, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(73, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'MC', 'ratione', 'Address1_ut', 'Address2_et', 'Address3_ea', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-29 20:32:26', '2023-12-10 08:15:05', 10, 3, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(74, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'AMEX', 'ducimus', 'Address1_et', 'Address2_ut', 'Address3_et', 'Add_c_id', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-27 02:34:22', '2023-12-10 08:15:05', 8, 3, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(75, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'JCB', 'tempora', 'Address1_et', 'Address2_ut', 'Address3_et', 'Add_c_at', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-21 00:09:31', '2023-12-10 08:15:05', 1, 5, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(76, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'JCB', 'dolorum', 'Address1_ea', 'Address2_ut', 'Address3_ut', 'Add_c_ut', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-27 03:16:22', '2023-12-10 08:15:05', 3, 0, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(77, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'MC', 'commodi', 'Address1_et', 'Address2_ut', 'Address3_et', 'Add_c_et', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 06:05:00', '2023-12-10 08:15:05', 7, 0, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(78, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'MC', 'laborum', 'Address1_et', 'Address2_in', 'Address3_ut', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-11 02:21:06', '2023-12-10 08:15:05', 9, 3, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(79, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'CUP', 'tenetur', 'Address1_ab', 'Address2_et', 'Address3_ut', 'Add_c_in', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-16 01:48:17', '2023-12-10 08:15:05', 5, 3, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(80, 'IDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'AMEX', 'commodi', 'Address1_id', 'Address2_et', 'Address3_ut', 'Add_c_et', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-26 00:26:54', '2023-12-10 08:15:05', 4, 0, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(81, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'JCB', 'dolores', 'Address1_et', 'Address2_at', 'Address3_et', 'Add_c_id', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-28 08:57:53', '2023-12-10 08:15:05', 2, 0, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(82, 'IDFC', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'CUP', 'aliquam', 'Address1_ab', 'Address2_et', 'Address3_et', 'Add_c_ea', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-12-10 19:00:56', '2023-12-10 08:15:05', 10, 0, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(83, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'VISA', 'nostrum', 'Address1_ut', 'Address2_et', 'Address3_ut', 'Add_c_in', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-12 11:22:57', '2023-12-10 08:15:05', 9, 3, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(84, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'CUP', 'eveniet', 'Address1_in', 'Address2_et', 'Address3_at', 'Add_c_ut', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-09 04:34:26', '2023-12-10 08:15:05', 3, 2, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(85, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'AMEX', 'dolorem', 'Address1_et', 'Address2_et', 'Address3_ea', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-07 12:16:49', '2023-12-10 08:15:05', 3, 1, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(86, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'VISA', 'dolorum', 'Address1_in', 'Address2_ut', 'Address3_et', 'Add_c_in', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-19 06:56:18', '2023-12-10 08:15:05', 6, 5, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(87, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'JCB', 'tempore', 'Address1_ut', 'Address2_ex', 'Address3_ea', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-27 17:38:53', '2023-12-10 08:15:05', 5, 3, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(88, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'JCB', 'numquam', 'Address1_et', 'Address2_at', 'Address3_ut', 'Add_c_ab', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-05 03:32:24', '2023-12-10 08:15:05', 1, 2, 5, '2023-12-11 11:39:21', '2023-12-11 11:39:21');
+INSERT INTO `cards` (`id`, `Bank`, `Date`, `Product`, `Logo`, `Scheme`, `Name`, `Address1`, `Address2`, `Address3`, `City`, `State`, `Pin`, `Mobile`, `Other_Contact`, `Reference_No`, `AWB_No`, `RTO_Address1`, `RTO_Address2`, `RTO_Address3`, `RTO_City`, `RTO_State`, `RTO_Pin`, `Office_Address1`, `Office_Address2`, `Office_Address3`, `Office_City`, `Office_State`, `Office_Pin`, `PA_Flag`, `NRWC_Flag`, `Priority`, `Third_Party`, `Bureau_Code`, `Courier_Code`, `Form_Factor`, `Comments`, `Personalized_NonPersonalized`, `Individual_Bulk_Break`, `Sub_Customer`, `Status`, `If_PULL`, `Field_1`, `Field_2`, `Field_3`, `Field_4`, `Field_5`, `Field_6`, `Field_7`, `createdAt`, `updatedAt`, `fileMasterId`, `Bureau_Status`, `Courier_Status`, `Bureau_Status_Timestamp`, `Courier_Status_Timestamp`) VALUES
+(89, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'JCB', 'commodi', 'Address1_id', 'Address2_et', 'Address3_ab', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-10 02:50:43', '2023-12-10 08:15:05', 7, 4, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(90, 'SBI', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'AMEX', 'laborum', 'Address1_ut', 'Address2_et', 'Address3_id', 'Add_c_ad', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-06 03:37:58', '2023-12-10 08:15:05', 3, 2, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(91, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'CUP', 'dolorum', 'Address1_et', 'Address2_et', 'Address3_et', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-18 07:39:37', '2023-12-10 08:15:05', 6, 4, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(92, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'VISA', 'facilis', 'Address1_ut', 'Address2_ut', 'Address3_et', 'Add_c_in', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-22 07:06:50', '2023-12-10 08:15:05', 6, 1, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(93, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'MC', 'dolores', 'Address1_ut', 'Address2_at', 'Address3_at', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-14 11:20:24', '2023-12-10 08:15:05', 2, 1, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(94, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'MC', 'nostrum', 'Address1_ut', 'Address2_ea', 'Address3_ut', 'Add_c_id', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-22 13:13:25', '2023-12-10 08:15:05', 10, 2, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(95, 'IDFC', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'VISA', 'debitis', 'Address1_et', 'Address2_ab', 'Address3_ex', 'Add_c_in', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-28 22:18:23', '2023-12-10 08:15:05', 8, 0, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(96, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'AMEX', 'placeat', 'Address1_et', 'Address2_in', 'Address3_et', 'Add_c_ea', 'Address_s_ex', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-02 12:41:56', '2023-12-10 08:15:05', 5, 4, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(97, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'JCB', 'impedit', 'Address1_et', 'Address2_et', 'Address3_id', 'Add_c_ut', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-23 06:09:32', '2023-12-10 08:15:05', 6, 3, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(98, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'CUP', 'tempora', 'Address1_ut', 'Address2_et', 'Address3_at', 'Add_c_ad', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-06 08:45:07', '2023-12-10 08:15:05', 10, 5, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(99, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'PPL', 'VISA', 'nostrum', 'Address1_et', 'Address2_et', 'Address3_et', 'Add_c_ut', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-14 20:49:06', '2023-12-10 08:15:05', 2, 0, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(100, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'GPL', 'VISA', 'commodi', 'Address1_id', 'Address2_et', 'Address3_ex', 'Add_c_et', 'Address_s_ab', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-17 05:18:30', '2023-12-10 08:15:05', 2, 5, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(101, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'JCB', 'dolores', 'Address1_et', 'Address2_et', 'Address3_id', 'Add_c_ut', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-27 16:42:32', '2023-12-10 08:15:05', 7, 2, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(102, 'HDFC', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'VISA', 'maiores', 'Address1_in', 'Address2_ut', 'Address3_et', 'Add_c_at', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-29 08:09:05', '2023-12-10 08:15:05', 6, 0, 2, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(103, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'AMEX', 'aliquam', 'Address1_ut', 'Address2_et', 'Address3_et', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-15 07:12:41', '2023-12-10 08:15:05', 10, 5, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(104, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'VISA', 'dolores', 'Address1_et', 'Address2_in', 'Address3_id', 'Add_c_ex', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-28 00:44:01', '2023-12-10 08:15:05', 7, 0, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(105, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'VISA', 'aliquid', 'Address1_et', 'Address2_ut', 'Address3_et', 'Add_c_et', 'Address_s_ad', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-01 15:14:07', '2023-12-10 08:15:05', 10, 5, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(106, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'FPL', 'VISA', 'quaerat', 'Address1_et', 'Address2_in', 'Address3_et', 'Add_c_ut', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-15 01:21:20', '2023-12-10 08:15:05', 10, 2, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(107, 'IDFC', '2023-12-11 11:39:21', 'VISA Master', 'PPL', 'CUP', 'aliquam', 'Address1_et', 'Address2_et', 'Address3_id', 'Add_c_et', 'Address_s_id', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'W', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-10-09 00:42:52', '2023-12-10 08:15:05', 6, 4, 1, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(108, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'AMEX', 'maiores', 'Address1_et', 'Address2_ea', 'Address3_in', 'Add_c_id', 'Address_s_ut', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-21 12:04:01', '2023-12-10 08:15:05', 10, 5, 3, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(109, 'SBI', '2023-12-11 11:39:21', 'Platinum', 'FPL', 'MC', 'impedit', 'Address1_in', 'Address2_et', 'Address3_in', 'Add_c_et', 'Address_s_in', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'C', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-22 10:12:27', '2023-12-10 08:15:05', 10, 2, 4, '2023-12-11 11:39:21', '2023-12-11 11:39:21'),
+(110, 'HDFC', '2023-12-11 11:39:21', 'VISA Master', 'GPL', 'JCB', 'officia', 'Address1_et', 'Address2_id', 'Address3_ut', 'Add_c_et', 'Address_s_et', NULL, NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'R', NULL, NULL, NULL, '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-17 16:17:09', '2023-12-10 08:15:05', 9, 3, 0, '2023-12-11 11:39:21', '2023-12-11 11:39:21');
 
 -- --------------------------------------------------------
 
@@ -97,6 +230,7 @@ INSERT INTO `cards` (`id`, `Bank`, `Date`, `Product`, `Logo`, `Scheme`, `Name`, 
 -- Table structure for table `cardsupdates`
 --
 
+DROP TABLE IF EXISTS `cardsupdates`;
 CREATE TABLE `cardsupdates` (
   `id` int(11) NOT NULL,
   `Changemode` varchar(255) DEFAULT NULL,
@@ -106,12 +240,44 @@ CREATE TABLE `cardsupdates` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `cardsupdates`
+-- Table structure for table `filemasters`
 --
 
-INSERT INTO `cardsupdates` (`id`, `Changemode`, `Logjson`, `Comments`, `createdAt`, `updatedAt`) VALUES
-(1, 'filename12-3-14.text', '{\r\n\"Product\":\"product1\",\r\n\"Address1\":\"Newaddress1\"\r\n}', NULL, '2023-10-27 17:37:39', '2023-10-27 17:37:39');
+DROP TABLE IF EXISTS `filemasters`;
+CREATE TABLE `filemasters` (
+  `id` int(11) NOT NULL,
+  `fileName` varchar(255) DEFAULT NULL,
+  `DataProcessor` varchar(255) DEFAULT NULL,
+  `BureauName` varchar(255) DEFAULT NULL,
+  `FileAttribute` varchar(255) DEFAULT NULL,
+  `CutOffTime` datetime DEFAULT NULL,
+  `FileUploadTime` datetime DEFAULT '2023-12-10 08:15:05',
+  `createdAt` datetime DEFAULT '2023-12-10 08:15:05',
+  `updatedAt` datetime DEFAULT '2023-12-10 08:15:05'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `filemasters`
+--
+
+INSERT INTO `filemasters` (`id`, `fileName`, `DataProcessor`, `BureauName`, `FileAttribute`, `CutOffTime`, `FileUploadTime`, `createdAt`, `updatedAt`) VALUES
+(1, 'hdfc_itaque.zip', 'magnam', 'BureauName_c', '', '2023-10-04 18:56:04', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(2, 'hdfc_veniam.zip', 'libero', 'BureauName_b', '', '2023-09-23 21:13:18', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(3, 'hdfc_itaque.zip', 'minima', 'BureauName_b', '', '2023-10-18 16:54:23', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(4, 'hdfc_cumque.zip', 'magnam', 'BureauName_b', '', '2023-09-19 10:57:30', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(5, 'hdfc_libero.zip', 'fugiat', 'BureauName_a', '', '2023-11-28 03:04:19', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(6, 'hdfc_veniam_5.zip', 'cumque', 'BureauName_c', '', '2023-12-11 18:09:23', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(7, 'hdfc_cumque_6.zip', 'beatae', 'BureauName_a', '', '2023-12-13 08:07:56', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(8, 'icici_maxime.zip', 'facere', 'BureauName_b', '', '2023-09-19 20:37:32', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(9, 'icici_minima.zip', 'veniam', 'BureauName_c', '', '2023-12-09 01:54:59', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(10, 'icici_veniam.zip', 'soluta', 'BureauName_a', '', '2023-09-19 20:25:26', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(11, 'icici_dolore.zip', 'labore', 'BureauName_c', '', '2023-11-22 19:23:15', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(12, 'icici_beatae.zip', 'fugiat', 'BureauName_a', '', '2023-09-17 12:43:13', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(13, 'icici_fugiat_5.zip', 'cumque', 'BureauName_a', '', '2023-12-12 07:36:23', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05'),
+(14, 'icici_facere_6.zip', 'libero', 'BureauName_a', '', '2023-12-11 16:43:02', '2023-12-10 08:15:05', '2023-12-10 08:15:05', '2023-12-10 08:15:05');
 
 -- --------------------------------------------------------
 
@@ -119,6 +285,7 @@ INSERT INTO `cardsupdates` (`id`, `Changemode`, `Logjson`, `Comments`, `createdA
 -- Table structure for table `roles`
 --
 
+DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -132,6 +299,7 @@ CREATE TABLE `roles` (
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
@@ -141,59 +309,47 @@ CREATE TABLE `users` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `createdAt`, `updatedAt`) VALUES
-(1, 'admin', 'admin@mlno.in', '$2a$08$/58Hx8qA992Z5F0tSUDbd.gR1QD0tTxS4RTpN.KBEpDsAtXA/liHy', '2023-10-10 19:01:14', '2023-10-10 19:01:14');
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `user_roles`
 --
 
+DROP TABLE IF EXISTS `user_roles`;
 CREATE TABLE `user_roles` (
-  `roleId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
   `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `updatedAt` datetime NOT NULL,
+  `roleId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `audit_logs`
---
-
-CREATE TABLE `audit_logs` (
-  `id` int(11) NOT NULL,
-  `cardId` varchar(255) DEFAULT NULL,
-  `previous` JSON NOT NULL,
-  `current` JSON NOT NULL,
-  `createdBy` varchar(255) NOT NULL,
-  `modifiedBy` varchar(255) NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `audit_logs`
+--
+ALTER TABLE `audit_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `cards`
 --
 ALTER TABLE `cards`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fileMasterId` (`fileMasterId`);
 
 --
 -- Indexes for table `cardsupdates`
 --
 ALTER TABLE `cardsupdates`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `filemasters`
+--
+ALTER TABLE `filemasters`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -216,42 +372,48 @@ ALTER TABLE `user_roles`
   ADD KEY `userId` (`userId`);
 
 --
--- Indexes for table `audit_logs`
---
-ALTER TABLE `audit_logs`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `cards`
---
-ALTER TABLE `cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `cardsupdates`
---
-ALTER TABLE `cardsupdates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cards`
+--
+ALTER TABLE `cards`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+
+--
+-- AUTO_INCREMENT for table `cardsupdates`
+--
+ALTER TABLE `cardsupdates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `filemasters`
+--
+ALTER TABLE `filemasters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `cards`
+--
+ALTER TABLE `cards`
+  ADD CONSTRAINT `cards_ibfk_1` FOREIGN KEY (`fileMasterId`) REFERENCES `filemasters` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_roles`
