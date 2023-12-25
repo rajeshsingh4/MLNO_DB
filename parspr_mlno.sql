@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2023 at 08:57 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Dec 25, 2023 at 10:57 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `parspr_mlno`
 --
+CREATE DATABASE IF NOT EXISTS `parspr_mlno` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `parspr_mlno`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `audit_logs`
 --
 
+DROP TABLE IF EXISTS `audit_logs`;
 CREATE TABLE `audit_logs` (
   `id` int(11) NOT NULL,
   `cardId` int(11) DEFAULT NULL,
@@ -61,6 +64,7 @@ INSERT INTO `audit_logs` (`id`, `cardId`, `previous`, `current`, `createdBy`, `m
 -- Table structure for table `cards`
 --
 
+DROP TABLE IF EXISTS `cards`;
 CREATE TABLE `cards` (
   `id` int(11) NOT NULL,
   `Bank` varchar(255) DEFAULT NULL,
@@ -246,6 +250,7 @@ INSERT INTO `cards` (`id`, `Bank`, `Date`, `Product`, `Logo`, `Scheme`, `Name`, 
 -- Table structure for table `cardsupdates`
 --
 
+DROP TABLE IF EXISTS `cardsupdates`;
 CREATE TABLE `cardsupdates` (
   `id` int(11) NOT NULL,
   `Changemode` varchar(255) DEFAULT NULL,
@@ -261,6 +266,7 @@ CREATE TABLE `cardsupdates` (
 -- Table structure for table `filemasters`
 --
 
+DROP TABLE IF EXISTS `filemasters`;
 CREATE TABLE `filemasters` (
   `id` int(11) NOT NULL,
   `fileName` varchar(255) DEFAULT NULL,
@@ -299,9 +305,62 @@ INSERT INTO `filemasters` (`id`, `fileName`, `DataProcessor`, `BureauName`, `Fil
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `menus`
+--
+
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE `menus` (
+  `id` int(11) NOT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `menus`
+--
+
+INSERT INTO `menus` (`id`, `label`, `path`, `createdAt`, `updatedAt`) VALUES
+(1, 'Bureau Comparision', '/bureau-comparision', '2023-12-22 14:43:37', '2023-12-22 14:43:37'),
+(2, 'Pending Bureau Reports', '/bureau-reports', '2023-12-22 14:44:11', '2023-12-22 14:44:11'),
+(3, 'File Wise Tracking', '/files', '2023-12-22 14:44:11', '2023-12-22 14:44:11'),
+(4, 'File Wise Tracking Cards', '/files/:id', '2023-12-22 19:22:00', '2023-12-22 19:22:00'),
+(5, 'File TAT Report', '/file-tat-report', '2023-12-22 19:22:49', '2023-12-22 19:22:49'),
+(6, 'Pull Request', '/pull-request', '2023-12-22 19:22:49', '2023-12-22 19:22:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_roles`
+--
+
+DROP TABLE IF EXISTS `menu_roles`;
+CREATE TABLE `menu_roles` (
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `roleId` int(11) NOT NULL,
+  `menuId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `menu_roles`
+--
+
+INSERT INTO `menu_roles` (`createdAt`, `updatedAt`, `roleId`, `menuId`) VALUES
+('2023-12-22 14:47:26', '2023-12-22 14:47:26', 0, 1),
+('2023-12-22 14:47:27', '2023-12-22 14:47:27', 0, 2),
+('2023-12-22 14:48:18', '2023-12-22 14:48:18', 0, 3),
+('2023-12-22 14:48:30', '2023-12-22 14:48:30', 1, 3),
+('2023-12-22 19:24:09', '2023-12-22 19:24:09', 1, 4);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pullrequests`
 --
 
+DROP TABLE IF EXISTS `pullrequests`;
 CREATE TABLE `pullrequests` (
   `id` int(11) NOT NULL,
   `action` varchar(255) DEFAULT NULL,
@@ -331,7 +390,9 @@ INSERT INTO `pullrequests` (`id`, `action`, `changeCommunicatedTo`, `field`, `or
 (3, 'newvalue', 1, 'Address1', 'Address1_ex', 'Town hall', 'other', '127.0.0.0', NULL, 1, 1, 1, 1, '2023-12-22 19:00:00', '2023-12-22 19:00:00', 1),
 (4, 'newvalue', 1, 'Scheme', 'VISA', 'AMEX', 'sms', '127.0.0.0', '2547026a-0136-4b74-ba5b-a843715d8564', 2, 7, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
 (5, 'accelerate', 1, '', '', '', 'sms', '127.0.0.0', '90d2759b-ad52-4a08-8deb-3f88ea983f29', 6, 6, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
-(6, 'accelerate', 1, '', '', '', 'inperson', '127.0.0.0', '1d17aac8-4173-4744-a828-7a7190f04dcf', 6, 6, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1);
+(6, 'accelerate', 1, '', '', '', 'inperson', '127.0.0.0', '1d17aac8-4173-4744-a828-7a7190f04dcf', 6, 6, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
+(7, 'accelerate', 1, '', '', '', 'email', '127.0.0.0', '0e0b051c-5ae9-400e-982b-5260ec8ab8d4', 1, 9, 1, 1, '2023-12-25 07:51:20', '2023-12-25 07:51:20', 1),
+(8, 'newvalue', 1, 'Name', 'nostrum', 'rajesh123', 'whatsapp', '127.0.0.0', '98197340-8f12-4df2-85bd-ffef0f614c90', 8, 5, 1, 1, '2023-12-25 07:51:20', '2023-12-25 07:51:20', 1);
 
 -- --------------------------------------------------------
 
@@ -339,6 +400,7 @@ INSERT INTO `pullrequests` (`id`, `action`, `changeCommunicatedTo`, `field`, `or
 -- Table structure for table `roles`
 --
 
+DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -346,12 +408,22 @@ CREATE TABLE `roles` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
+(0, 'user', '2023-12-22 12:50:10', '2023-12-22 12:50:10'),
+(1, 'admin', '2023-12-22 12:50:10', '2023-12-22 12:50:10'),
+(2, 'bureau', '2023-12-22 12:51:08', '2023-12-22 12:51:08');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
@@ -366,7 +438,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `createdAt`, `updatedAt`) VALUES
-(1, 'admin', 'admin@mlno.in', '$2a$08$/58Hx8qA992Z5F0tSUDbd.gR1QD0tTxS4RTpN.KBEpDsAtXA/liHy', '2023-10-10 19:01:14', '2023-10-10 19:01:14');
+(1, 'admin', 'admin@mlno.in', '$2a$08$/58Hx8qA992Z5F0tSUDbd.gR1QD0tTxS4RTpN.KBEpDsAtXA/liHy', '2023-10-10 19:01:14', '2023-10-10 19:01:14'),
+(2, 'adminr', 'test@test.com', '$2a$08$ncbgbEmP.GDXts0Y1hqthek6uuVFYB2Rx8uPl9oXRvMSbblHELdCS', '2023-12-22 11:59:23', '2023-12-22 11:59:23'),
+(3, 'bureau1', 'moderator@test.com', '$2a$08$miheRAZao6NRxc4ktsAOkOqOu1I4vRLRxEg.evz0WK40nDdodqDNi', '2023-12-22 12:00:44', '2023-12-22 12:00:44'),
+(4, 'test1', 'test1@test.com', '$2a$08$7p3bWDQBQNl.8wxRkw2.9u5qxvD2PWMHoMMf.FeRK704aLU5z2yuu', '2023-12-22 12:01:12', '2023-12-22 12:01:12');
 
 -- --------------------------------------------------------
 
@@ -374,12 +449,22 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `createdAt`, `update
 -- Table structure for table `user_roles`
 --
 
+DROP TABLE IF EXISTS `user_roles`;
 CREATE TABLE `user_roles` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `roleId` int(11) NOT NULL,
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
+('2023-12-22 12:01:12', '2023-12-22 12:01:12', 0, 4),
+('2023-12-22 11:59:23', '2023-12-22 11:59:23', 1, 2),
+('2023-12-22 12:00:44', '2023-12-22 12:00:44', 2, 3);
 
 --
 -- Indexes for dumped tables
@@ -419,6 +504,19 @@ ALTER TABLE `filemasters`
   ADD KEY `createdBy` (`createdBy`),
   ADD KEY `modifiedBy` (`modifiedBy`),
   ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `menus`
+--
+ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menu_roles`
+--
+ALTER TABLE `menu_roles`
+  ADD PRIMARY KEY (`roleId`,`menuId`),
+  ADD KEY `menuId` (`menuId`);
 
 --
 -- Indexes for table `pullrequests`
@@ -483,13 +581,13 @@ ALTER TABLE `filemasters`
 -- AUTO_INCREMENT for table `pullrequests`
 --
 ALTER TABLE `pullrequests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -520,6 +618,13 @@ ALTER TABLE `filemasters`
   ADD CONSTRAINT `filemasters_ibfk_1` FOREIGN KEY (`createdBy`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `filemasters_ibfk_2` FOREIGN KEY (`modifiedBy`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `filemasters_ibfk_3` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `menu_roles`
+--
+ALTER TABLE `menu_roles`
+  ADD CONSTRAINT `menu_roles_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `menu_roles_ibfk_2` FOREIGN KEY (`menuId`) REFERENCES `menus` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pullrequests`
