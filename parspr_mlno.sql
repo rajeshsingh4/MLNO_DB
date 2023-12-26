@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2023 at 10:57 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+-- Generation Time: Dec 26, 2023 at 01:09 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,16 +47,16 @@ CREATE TABLE `audit_logs` (
 --
 
 INSERT INTO `audit_logs` (`id`, `cardId`, `previous`, `current`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
-(1, 1, 'null', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', NULL),
-(2, 1, 'null', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', NULL),
-(3, 2, 'null', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', NULL),
-(4, 5, 'null', '{}', 1, 1, '2023-12-20 20:47:38', '2023-12-20 20:47:38', NULL),
-(5, 4, 'null', '{}', 1, 1, '2023-12-20 20:47:38', '2023-12-20 20:47:38', NULL),
-(6, 7, 'null', '{}', 1, 1, '2023-12-20 20:48:34', '2023-12-20 20:48:34', NULL),
-(7, 6, 'null', '{}', 1, 1, '2023-12-20 20:54:46', '2023-12-20 20:54:46', NULL),
-(8, 8, 'null', '{}', 1, 1, '2023-12-20 20:56:20', '2023-12-20 20:56:20', NULL),
-(9, 2, 'null', '{}', 1, 1, '2023-12-20 20:58:45', '2023-12-20 20:58:45', NULL),
-(10, 9, 'null', '{}', 1, 1, '2023-12-20 21:00:03', '2023-12-20 21:00:03', NULL);
+(1, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
+(2, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
+(3, 2, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
+(4, 5, '{}', '{}', 1, 1, '2023-12-20 20:47:38', '2023-12-20 20:47:38', 1),
+(5, 4, '{}', '{}', 1, 1, '2023-12-20 20:47:38', '2023-12-20 20:47:38', 1),
+(6, 7, '{}', '{}', 1, 1, '2023-12-20 20:48:34', '2023-12-20 20:48:34', 1),
+(7, 6, '{}', '{}', 1, 1, '2023-12-20 20:54:46', '2023-12-20 20:54:46', 1),
+(8, 8, '{}', '{}', 1, 1, '2023-12-20 20:56:20', '2023-12-20 20:56:20', 1),
+(9, 2, '{}', '{}', 1, 1, '2023-12-20 20:58:45', '2023-12-20 20:58:45', 1),
+(10, 9, '{}', '{}', 1, 1, '2023-12-20 21:00:03', '2023-12-20 21:00:03', 1);
 
 -- --------------------------------------------------------
 
@@ -364,19 +364,20 @@ DROP TABLE IF EXISTS `pullrequests`;
 CREATE TABLE `pullrequests` (
   `id` int(11) NOT NULL,
   `action` varchar(255) DEFAULT NULL,
-  `changeCommunicatedTo` int(11) DEFAULT NULL,
+  `changeCommunicatedTo` varchar(255) DEFAULT NULL,
   `field` varchar(255) DEFAULT NULL,
   `originalValue` varchar(255) DEFAULT NULL,
   `newValue` varchar(255) DEFAULT NULL,
   `mode` varchar(255) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
   `ipaddress` varchar(255) DEFAULT NULL,
   `serviceRequest` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `cardId` int(11) DEFAULT NULL,
   `fileMasterId` int(11) DEFAULT NULL,
   `createdBy` int(11) DEFAULT NULL,
   `modifiedBy` int(11) DEFAULT NULL,
-  `createdAt` datetime DEFAULT '2023-12-23 11:19:29',
-  `updatedAt` datetime DEFAULT '2023-12-23 11:19:29',
+  `createdAt` datetime DEFAULT '2023-12-26 09:09:58',
+  `updatedAt` datetime DEFAULT '2023-12-26 09:09:58',
   `userId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -384,15 +385,51 @@ CREATE TABLE `pullrequests` (
 -- Dumping data for table `pullrequests`
 --
 
-INSERT INTO `pullrequests` (`id`, `action`, `changeCommunicatedTo`, `field`, `originalValue`, `newValue`, `mode`, `ipaddress`, `serviceRequest`, `cardId`, `fileMasterId`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
-(1, 'newvalue', 1, 'Address1', 'Address1_ut', 'Sign theatre', 'email', '127.0.0.0', NULL, 1, 1, 1, 1, '2023-12-22 19:00:00', '2023-12-22 19:00:00', 1),
-(2, 'newvalue', 1, 'Address1', 'Address1_et', 'signature tower', 'phone', '127.0.0.0', NULL, 1, 1, 1, 1, '2023-12-22 19:00:00', '2023-12-22 19:00:00', 1),
-(3, 'newvalue', 1, 'Address1', 'Address1_ex', 'Town hall', 'other', '127.0.0.0', NULL, 1, 1, 1, 1, '2023-12-22 19:00:00', '2023-12-22 19:00:00', 1),
-(4, 'newvalue', 1, 'Scheme', 'VISA', 'AMEX', 'sms', '127.0.0.0', '2547026a-0136-4b74-ba5b-a843715d8564', 2, 7, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
-(5, 'accelerate', 1, '', '', '', 'sms', '127.0.0.0', '90d2759b-ad52-4a08-8deb-3f88ea983f29', 6, 6, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
-(6, 'accelerate', 1, '', '', '', 'inperson', '127.0.0.0', '1d17aac8-4173-4744-a828-7a7190f04dcf', 6, 6, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
-(7, 'accelerate', 1, '', '', '', 'email', '127.0.0.0', '0e0b051c-5ae9-400e-982b-5260ec8ab8d4', 1, 9, 1, 1, '2023-12-25 07:51:20', '2023-12-25 07:51:20', 1),
-(8, 'newvalue', 1, 'Name', 'nostrum', 'rajesh123', 'whatsapp', '127.0.0.0', '98197340-8f12-4df2-85bd-ffef0f614c90', 8, 5, 1, 1, '2023-12-25 07:51:20', '2023-12-25 07:51:20', 1);
+INSERT INTO `pullrequests` (`id`, `action`, `changeCommunicatedTo`, `field`, `originalValue`, `newValue`, `mode`, `comment`, `ipaddress`, `serviceRequest`, `cardId`, `fileMasterId`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
+(1, 'newvalue', '1', 'Address1', 'Address1_ut', 'Sign theatre', 'email', NULL, '127.0.0.0', NULL, 1, 1, 1, 1, '2023-12-22 19:00:00', '2023-12-22 19:00:00', 1),
+(2, 'newvalue', '1', 'Address1', 'Address1_et', 'signature tower', 'phone', NULL, '127.0.0.0', NULL, 1, 1, 1, 1, '2023-12-22 19:00:00', '2023-12-22 19:00:00', 1),
+(3, 'newvalue', '1', 'Address1', 'Address1_ex', 'Town hall', 'other', NULL, '127.0.0.0', NULL, 1, 1, 1, 1, '2023-12-22 19:00:00', '2023-12-22 19:00:00', 1),
+(4, 'newvalue', '1', 'Scheme', 'VISA', 'AMEX', 'sms', NULL, '127.0.0.0', '2547026a-0136-4b74-ba5b-a843715d8564', 2, 7, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
+(5, 'accelerate', '1', '', '', '', 'sms', NULL, '127.0.0.0', '90d2759b-ad52-4a08-8deb-3f88ea983f29', 6, 6, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
+(6, 'accelerate', '1', '', '', '', 'inperson', NULL, '127.0.0.0', '1d17aac8-4173-4744-a828-7a7190f04dcf', 6, 6, 1, 1, '2023-12-24 15:26:22', '2023-12-24 15:26:22', 1),
+(7, 'accelerate', '1', '', '', '', 'email', NULL, '127.0.0.0', '0e0b051c-5ae9-400e-982b-5260ec8ab8d4', 1, 9, 1, 1, '2023-12-25 07:51:20', '2023-12-25 07:51:20', 1),
+(8, 'newvalue', '1', 'Name', 'nostrum', 'rajesh123', 'whatsapp', NULL, '127.0.0.0', '98197340-8f12-4df2-85bd-ffef0f614c90', 8, 5, 1, 1, '2023-12-25 07:51:20', '2023-12-25 07:51:20', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pullrequest_logs`
+--
+
+DROP TABLE IF EXISTS `pullrequest_logs`;
+CREATE TABLE `pullrequest_logs` (
+  `id` int(11) NOT NULL,
+  `cardId` int(11) DEFAULT NULL,
+  `fileMasterId` int(11) DEFAULT NULL,
+  `previous` varchar(255) DEFAULT NULL,
+  `current` varchar(255) DEFAULT NULL,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `createdAt` datetime DEFAULT '2023-12-26 06:50:00',
+  `updatedAt` datetime DEFAULT '2023-12-26 06:50:00',
+  `userId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pullrequest_logs`
+--
+
+INSERT INTO `pullrequest_logs` (`id`, `cardId`, `fileMasterId`, `previous`, `current`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
+(1, 1, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
+(2, 1, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
+(3, 2, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
+(4, 5, 2, '{}', '{}', 1, 1, '2023-12-20 20:47:38', '2023-12-20 20:47:38', 1),
+(5, 4, 2, '{}', '{}', 1, 1, '2023-12-20 20:47:38', '2023-12-20 20:47:38', 1),
+(6, 7, 3, '{}', '{}', 1, 1, '2023-12-20 20:48:34', '2023-12-20 20:48:34', 1),
+(7, 6, 4, '{}', '{}', 1, 1, '2023-12-20 20:54:46', '2023-12-20 20:54:46', 1),
+(8, 8, 4, '{}', '{}', 1, 1, '2023-12-20 20:56:20', '2023-12-20 20:56:20', 1),
+(9, 2, 7, '{}', '{}', 1, 1, '2023-12-20 20:58:45', '2023-12-20 20:58:45', 1),
+(10, 9, 6, '{}', '{}', 1, 1, '2023-12-20 21:00:03', '2023-12-20 21:00:03', 1);
 
 -- --------------------------------------------------------
 
@@ -416,6 +453,36 @@ INSERT INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 (0, 'user', '2023-12-22 12:50:10', '2023-12-22 12:50:10'),
 (1, 'admin', '2023-12-22 12:50:10', '2023-12-22 12:50:10'),
 (2, 'bureau', '2023-12-22 12:51:08', '2023-12-22 12:51:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userdetails`
+--
+
+DROP TABLE IF EXISTS `userdetails`;
+CREATE TABLE `userdetails` (
+  `id` int(11) NOT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `middlename` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `pincode` int(6) DEFAULT NULL,
+  `bio` varchar(255) DEFAULT NULL,
+  `phone` varchar(10) DEFAULT NULL,
+  `createdBy` int(11) DEFAULT NULL,
+  `modifiedBy` int(11) DEFAULT NULL,
+  `createdAt` datetime DEFAULT '2023-12-26 09:09:58',
+  `updatedAt` datetime DEFAULT '2023-12-26 09:09:58',
+  `userId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `userdetails`
+--
+
+INSERT INTO `userdetails` (`id`, `firstname`, `middlename`, `lastname`, `address`, `pincode`, `bio`, `phone`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
+(1, 'Aditya', NULL, 'Kumar', 'Temporary address, dummy street, hometown', 0, NULL, '9999999999', 1, 1, '2023-12-26 06:50:00', '2023-12-26 06:50:00', 1);
 
 -- --------------------------------------------------------
 
@@ -462,7 +529,9 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
+('2023-12-26 08:12:25', '2023-12-26 08:12:25', 0, 1),
 ('2023-12-22 12:01:12', '2023-12-22 12:01:12', 0, 4),
+('2023-12-26 08:13:24', '2023-12-26 08:13:24', 1, 1),
 ('2023-12-22 11:59:23', '2023-12-22 11:59:23', 1, 2),
 ('2023-12-22 12:00:44', '2023-12-22 12:00:44', 2, 3);
 
@@ -523,7 +592,17 @@ ALTER TABLE `menu_roles`
 --
 ALTER TABLE `pullrequests`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `changeCommunicatedTo` (`changeCommunicatedTo`),
+  ADD KEY `cardId` (`cardId`),
+  ADD KEY `fileMasterId` (`fileMasterId`),
+  ADD KEY `createdBy` (`createdBy`),
+  ADD KEY `modifiedBy` (`modifiedBy`),
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `pullrequest_logs`
+--
+ALTER TABLE `pullrequest_logs`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `cardId` (`cardId`),
   ADD KEY `fileMasterId` (`fileMasterId`),
   ADD KEY `createdBy` (`createdBy`),
@@ -535,6 +614,15 @@ ALTER TABLE `pullrequests`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `userdetails`
+--
+ALTER TABLE `userdetails`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `createdBy` (`createdBy`),
+  ADD KEY `modifiedBy` (`modifiedBy`),
+  ADD KEY `userId` (`userId`);
 
 --
 -- Indexes for table `users`
@@ -584,6 +672,18 @@ ALTER TABLE `pullrequests`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `pullrequest_logs`
+--
+ALTER TABLE `pullrequest_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `userdetails`
+--
+ALTER TABLE `userdetails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -630,12 +730,29 @@ ALTER TABLE `menu_roles`
 -- Constraints for table `pullrequests`
 --
 ALTER TABLE `pullrequests`
-  ADD CONSTRAINT `pullrequests_ibfk_1` FOREIGN KEY (`changeCommunicatedTo`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `pullrequests_ibfk_2` FOREIGN KEY (`cardId`) REFERENCES `cards` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `pullrequests_ibfk_3` FOREIGN KEY (`fileMasterId`) REFERENCES `filemasters` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `pullrequests_ibfk_4` FOREIGN KEY (`createdBy`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `pullrequests_ibfk_5` FOREIGN KEY (`modifiedBy`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `pullrequests_ibfk_6` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `pullrequests_ibfk_1` FOREIGN KEY (`cardId`) REFERENCES `cards` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `pullrequests_ibfk_2` FOREIGN KEY (`fileMasterId`) REFERENCES `filemasters` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `pullrequests_ibfk_3` FOREIGN KEY (`createdBy`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pullrequests_ibfk_4` FOREIGN KEY (`modifiedBy`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pullrequests_ibfk_5` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pullrequest_logs`
+--
+ALTER TABLE `pullrequest_logs`
+  ADD CONSTRAINT `pullrequest_logs_ibfk_1` FOREIGN KEY (`cardId`) REFERENCES `cards` (`id`),
+  ADD CONSTRAINT `pullrequest_logs_ibfk_2` FOREIGN KEY (`fileMasterId`) REFERENCES `filemasters` (`id`),
+  ADD CONSTRAINT `pullrequest_logs_ibfk_3` FOREIGN KEY (`createdBy`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pullrequest_logs_ibfk_4` FOREIGN KEY (`modifiedBy`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pullrequest_logs_ibfk_5` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `userdetails`
+--
+ALTER TABLE `userdetails`
+  ADD CONSTRAINT `userdetails_ibfk_1` FOREIGN KEY (`createdBy`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `userdetails_ibfk_2` FOREIGN KEY (`modifiedBy`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `userdetails_ibfk_3` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_roles`
