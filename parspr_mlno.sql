@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2023 at 01:09 PM
+-- Generation Time: Dec 27, 2023 at 08:21 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -404,14 +404,16 @@ INSERT INTO `pullrequests` (`id`, `action`, `changeCommunicatedTo`, `field`, `or
 DROP TABLE IF EXISTS `pullrequest_logs`;
 CREATE TABLE `pullrequest_logs` (
   `id` int(11) NOT NULL,
+  `serviceRequestId` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `pullRequestId` int(11) DEFAULT NULL,
   `cardId` int(11) DEFAULT NULL,
   `fileMasterId` int(11) DEFAULT NULL,
   `previous` varchar(255) DEFAULT NULL,
   `current` varchar(255) DEFAULT NULL,
   `createdBy` int(11) DEFAULT NULL,
   `modifiedBy` int(11) DEFAULT NULL,
-  `createdAt` datetime DEFAULT '2023-12-26 06:50:00',
-  `updatedAt` datetime DEFAULT '2023-12-26 06:50:00',
+  `createdAt` datetime DEFAULT '2023-12-27 06:47:35',
+  `updatedAt` datetime DEFAULT '2023-12-27 06:47:35',
   `userId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -419,17 +421,9 @@ CREATE TABLE `pullrequest_logs` (
 -- Dumping data for table `pullrequest_logs`
 --
 
-INSERT INTO `pullrequest_logs` (`id`, `cardId`, `fileMasterId`, `previous`, `current`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
-(1, 1, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
-(2, 1, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
-(3, 2, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
-(4, 5, 2, '{}', '{}', 1, 1, '2023-12-20 20:47:38', '2023-12-20 20:47:38', 1),
-(5, 4, 2, '{}', '{}', 1, 1, '2023-12-20 20:47:38', '2023-12-20 20:47:38', 1),
-(6, 7, 3, '{}', '{}', 1, 1, '2023-12-20 20:48:34', '2023-12-20 20:48:34', 1),
-(7, 6, 4, '{}', '{}', 1, 1, '2023-12-20 20:54:46', '2023-12-20 20:54:46', 1),
-(8, 8, 4, '{}', '{}', 1, 1, '2023-12-20 20:56:20', '2023-12-20 20:56:20', 1),
-(9, 2, 7, '{}', '{}', 1, 1, '2023-12-20 20:58:45', '2023-12-20 20:58:45', 1),
-(10, 9, 6, '{}', '{}', 1, 1, '2023-12-20 21:00:03', '2023-12-20 21:00:03', 1);
+INSERT INTO `pullrequest_logs` (`id`, `serviceRequestId`, `pullRequestId`, `cardId`, `fileMasterId`, `previous`, `current`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
+(1, '2547026a-0136-4b74-ba5b-a843715d8564', 1, 1, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1),
+(2, '2547026a-0136-4b74-ba5b-a843715d8564', 1, 1, 1, '{}', '{}', 1, 1, '2023-12-20 20:43:45', '2023-12-20 20:43:45', 1);
 
 -- --------------------------------------------------------
 
@@ -529,7 +523,6 @@ CREATE TABLE `user_roles` (
 --
 
 INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
-('2023-12-26 08:12:25', '2023-12-26 08:12:25', 0, 1),
 ('2023-12-22 12:01:12', '2023-12-22 12:01:12', 0, 4),
 ('2023-12-26 08:13:24', '2023-12-26 08:13:24', 1, 1),
 ('2023-12-22 11:59:23', '2023-12-22 11:59:23', 1, 2),
@@ -603,6 +596,7 @@ ALTER TABLE `pullrequests`
 --
 ALTER TABLE `pullrequest_logs`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `pullRequestId` (`pullRequestId`),
   ADD KEY `cardId` (`cardId`),
   ADD KEY `fileMasterId` (`fileMasterId`),
   ADD KEY `createdBy` (`createdBy`),
@@ -740,11 +734,12 @@ ALTER TABLE `pullrequests`
 -- Constraints for table `pullrequest_logs`
 --
 ALTER TABLE `pullrequest_logs`
-  ADD CONSTRAINT `pullrequest_logs_ibfk_1` FOREIGN KEY (`cardId`) REFERENCES `cards` (`id`),
-  ADD CONSTRAINT `pullrequest_logs_ibfk_2` FOREIGN KEY (`fileMasterId`) REFERENCES `filemasters` (`id`),
-  ADD CONSTRAINT `pullrequest_logs_ibfk_3` FOREIGN KEY (`createdBy`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `pullrequest_logs_ibfk_4` FOREIGN KEY (`modifiedBy`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `pullrequest_logs_ibfk_5` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `pullrequest_logs_ibfk_1` FOREIGN KEY (`pullRequestId`) REFERENCES `pullrequests` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `pullrequest_logs_ibfk_2` FOREIGN KEY (`cardId`) REFERENCES `cards` (`id`),
+  ADD CONSTRAINT `pullrequest_logs_ibfk_3` FOREIGN KEY (`fileMasterId`) REFERENCES `filemasters` (`id`),
+  ADD CONSTRAINT `pullrequest_logs_ibfk_4` FOREIGN KEY (`createdBy`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pullrequest_logs_ibfk_5` FOREIGN KEY (`modifiedBy`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `pullrequest_logs_ibfk_6` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `userdetails`
