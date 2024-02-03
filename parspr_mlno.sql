@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2024 at 12:44 PM
+-- Generation Time: Feb 03, 2024 at 06:21 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -30,8 +30,8 @@ USE `parspr_mlno`;
 --
 
 DROP TABLE IF EXISTS `audit_logs`;
-CREATE TABLE `audit_logs` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `audit_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `cardId` int(11) DEFAULT NULL,
   `previous` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`previous`)),
   `current` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`current`)),
@@ -39,8 +39,13 @@ CREATE TABLE `audit_logs` (
   `modifiedBy` int(11) DEFAULT NULL,
   `createdAt` datetime DEFAULT '2023-12-22 18:20:41',
   `updatedAt` datetime DEFAULT '2023-12-22 18:20:41',
-  `userId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `userId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cardId` (`cardId`),
+  KEY `createdBy` (`createdBy`),
+  KEY `modifiedBy` (`modifiedBy`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `audit_logs`
@@ -65,8 +70,8 @@ INSERT INTO `audit_logs` (`id`, `cardId`, `previous`, `current`, `createdBy`, `m
 --
 
 DROP TABLE IF EXISTS `cards`;
-CREATE TABLE `cards` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `cards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `Bank` varchar(255) DEFAULT NULL,
   `Date` datetime DEFAULT NULL,
   `Product` varchar(255) DEFAULT NULL,
@@ -124,8 +129,13 @@ CREATE TABLE `cards` (
   `createdAt` datetime DEFAULT '2023-12-22 18:30:57',
   `updatedAt` datetime DEFAULT '2023-12-22 18:30:57',
   `fileMasterId` int(11) DEFAULT NULL,
-  `userId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `userId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `createdBy` (`createdBy`),
+  KEY `modifiedBy` (`modifiedBy`),
+  KEY `fileMasterId` (`fileMasterId`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cards`
@@ -165,8 +175,8 @@ INSERT INTO `cards` (`id`, `Bank`, `Date`, `Product`, `Logo`, `Scheme`, `Name`, 
 --
 
 DROP TABLE IF EXISTS `filemasters`;
-CREATE TABLE `filemasters` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `filemasters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `fileName` varchar(255) DEFAULT NULL,
   `DataProcessor` varchar(255) DEFAULT NULL,
   `BureauName` varchar(255) DEFAULT NULL,
@@ -177,25 +187,29 @@ CREATE TABLE `filemasters` (
   `modifiedBy` int(11) DEFAULT NULL,
   `createdAt` datetime DEFAULT '2023-12-22 18:30:57',
   `updatedAt` datetime DEFAULT '2023-12-22 18:30:57',
-  `userId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `userId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `createdBy` (`createdBy`),
+  KEY `modifiedBy` (`modifiedBy`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `filemasters`
 --
 
 INSERT INTO `filemasters` (`id`, `fileName`, `DataProcessor`, `BureauName`, `FileAttribute`, `CutOffTime`, `FileUploadTime`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
-(1, 'hdfc_itaque.zip', 'magnam', 'Bureau3', '', '2023-10-04 18:56:04', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
+(1, 'hdfc_itaque.zip', 'magnam', 'Bureau1', '', '2023-10-04 18:56:04', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (2, 'hdfc_veniam.zip', 'libero', 'Bureau2', '', '2023-09-23 21:13:18', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (3, 'hdfc_itaque.zip', 'minima', 'Bureau2', '', '2023-10-18 16:54:23', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (4, 'hdfc_cumque.zip', 'magnam', 'Bureau2', '', '2023-09-19 10:57:30', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (5, 'hdfc_libero.zip', 'fugiat', 'Bureau1', '', '2023-11-28 03:04:19', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
-(6, 'hdfc_veniam_5.zip', 'cumque', 'Bureau3', '', '2023-12-11 18:09:23', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
+(6, 'hdfc_veniam_5.zip', 'cumque', 'Bureau1', '', '2023-12-11 18:09:23', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (7, 'hdfc_cumque_6.zip', 'beatae', 'Bureau1', '', '2023-12-13 08:07:56', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (8, 'icici_maxime.zip', 'facere', 'Bureau2', '', '2023-09-19 20:37:32', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
-(9, 'icici_minima.zip', 'veniam', 'Bureau3', '', '2023-12-09 01:54:59', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
+(9, 'icici_minima.zip', 'veniam', 'Bureau2', '', '2023-12-09 01:54:59', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (10, 'icici_veniam.zip', 'soluta', 'Bureau1', '', '2023-09-19 20:25:26', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
-(11, 'icici_dolore.zip', 'labore', 'Bureau3', '', '2023-11-22 19:23:15', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
+(11, 'icici_dolore.zip', 'labore', 'Bureau1', '', '2023-11-22 19:23:15', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (12, 'icici_beatae.zip', 'fugiat', 'Bureau1', '', '2023-09-17 12:43:13', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (13, 'icici_fugiat_5.zip', 'cumque', 'Bureau1', '', '2023-12-12 07:36:23', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1),
 (14, 'icici_facere_6.zip', 'libero', 'Bureau1', '', '2023-12-11 16:43:02', '2023-12-10 08:15:05', 1, 1, '2023-12-10 08:15:05', '2023-12-10 08:15:05', 1);
@@ -207,12 +221,13 @@ INSERT INTO `filemasters` (`id`, `fileName`, `DataProcessor`, `BureauName`, `Fil
 --
 
 DROP TABLE IF EXISTS `menus`;
-CREATE TABLE `menus` (
+CREATE TABLE IF NOT EXISTS `menus` (
   `id` int(11) NOT NULL,
   `label` varchar(255) DEFAULT NULL,
   `path` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -234,11 +249,13 @@ INSERT INTO `menus` (`id`, `label`, `path`, `createdAt`, `updatedAt`) VALUES
 --
 
 DROP TABLE IF EXISTS `menu_roles`;
-CREATE TABLE `menu_roles` (
+CREATE TABLE IF NOT EXISTS `menu_roles` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `roleId` int(11) NOT NULL,
-  `menuId` int(11) NOT NULL
+  `menuId` int(11) NOT NULL,
+  PRIMARY KEY (`roleId`,`menuId`),
+  KEY `menuId` (`menuId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -259,8 +276,8 @@ INSERT INTO `menu_roles` (`createdAt`, `updatedAt`, `roleId`, `menuId`) VALUES
 --
 
 DROP TABLE IF EXISTS `pullrequests`;
-CREATE TABLE `pullrequests` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `pullrequests` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(255) DEFAULT NULL,
   `changeCommunicatedTo` varchar(255) DEFAULT NULL,
   `field` varchar(255) DEFAULT NULL,
@@ -277,8 +294,14 @@ CREATE TABLE `pullrequests` (
   `modifiedBy` int(11) DEFAULT NULL,
   `createdAt` datetime DEFAULT '2023-12-29 09:02:57',
   `updatedAt` datetime DEFAULT '2023-12-29 09:02:57',
-  `userId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `userId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cardId` (`cardId`),
+  KEY `fileMasterId` (`fileMasterId`),
+  KEY `createdBy` (`createdBy`),
+  KEY `modifiedBy` (`modifiedBy`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pullrequests`
@@ -287,7 +310,8 @@ CREATE TABLE `pullrequests` (
 INSERT INTO `pullrequests` (`id`, `action`, `changeCommunicatedTo`, `field`, `originalValue`, `newValue`, `mode`, `comment`, `ipaddress`, `serviceRequest`, `status`, `cardId`, `fileMasterId`, `createdBy`, `modifiedBy`, `createdAt`, `updatedAt`, `userId`) VALUES
 (1, 'newvalue', 'Admin', 'Address1', 'Address1_ut', 'Higher floor 3', 'sms', 'Re-opened', '127.0.0.0', '1cec2eca-ec83-4ff4-ad57-f1438fd66e2d', 2, 1, 9, 1, 1, '2023-12-29 09:02:57', '2023-12-29 11:36:32', 1),
 (2, 'newvalue', 'Admin', 'Address1', 'Address1_et', 'Nearby circle under construction', 'email', 'Change in address communication', '127.0.0.0', '0968a7cd-2e9e-43e6-81bd-f1f0421267e0', 0, 5, 7, 1, 1, '2023-12-29 11:36:32', '2024-01-06 04:34:27', 1),
-(3, 'newvalue', 'Holder', 'Bureau_Status', 'holder', 'folder', 'sms', 'Change holder value', '127.0.0.0', '4a49ef90-a954-434b-a299-71dba1aad3a8', 0, 5, 7, 1, 1, '2023-12-29 11:36:32', '2023-12-29 11:36:32', 1);
+(3, 'newvalue', 'Holder', 'Bureau_Status', 'holder', 'folder', 'sms', 'Change holder value', '127.0.0.0', '4a49ef90-a954-434b-a299-71dba1aad3a8', 0, 5, 7, 1, 1, '2023-12-29 11:36:32', '2023-12-29 11:36:32', 1),
+(4, 'newvalue', 'bureau 1', 'Address1', 'Address1_id', 'New Address', 'email', 'Change in address', '127.0.0.0', '8f699fa6-69cc-45b3-8274-4e68b7cd72d4', 0, 2, 7, 5, 5, '2024-01-25 10:58:28', '2024-01-25 10:58:28', 5);
 
 -- --------------------------------------------------------
 
@@ -296,8 +320,8 @@ INSERT INTO `pullrequests` (`id`, `action`, `changeCommunicatedTo`, `field`, `or
 --
 
 DROP TABLE IF EXISTS `pullrequest_logs`;
-CREATE TABLE `pullrequest_logs` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `pullrequest_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `serviceRequestId` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `pullRequestId` int(11) DEFAULT NULL,
   `cardId` int(11) DEFAULT NULL,
@@ -308,8 +332,15 @@ CREATE TABLE `pullrequest_logs` (
   `modifiedBy` int(11) DEFAULT NULL,
   `createdAt` datetime DEFAULT '2023-12-29 09:02:57',
   `updatedAt` datetime DEFAULT '2023-12-29 09:02:57',
-  `userId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `userId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pullRequestId` (`pullRequestId`),
+  KEY `cardId` (`cardId`),
+  KEY `fileMasterId` (`fileMasterId`),
+  KEY `createdBy` (`createdBy`),
+  KEY `modifiedBy` (`modifiedBy`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pullrequest_logs`
@@ -321,7 +352,8 @@ INSERT INTO `pullrequest_logs` (`id`, `serviceRequestId`, `pullRequestId`, `card
 (3, '0968a7cd-2e9e-43e6-81bd-f1f0421267e0', 2, 5, 7, '\"{\\\"createdAt\\\":\\\"2023-12-29T11:36:32.949Z\\\",\\\"updatedAt\\\":\\\"2023-12-29T11:36:32.949Z\\\",\\\"serviceRequest\\\":\\\"0968a7cd-2e9e-43e6-81bd-f1f0421267e0\\\",\\\"status\\\":0,\\\"id\\\":2,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Admin\\\",\\\"field\\\":\\\"Address3\\\",\\\"originalValue\\\":\\\"Address3_ut\\\",\\\"newValue\\\":\\\"Nearby circle\\\",\\\"mode\\\":\\\"phone\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"comment\\\":\\\"Change in address communication\\\",\\\"cardId\\\":5,\\\"fileMasterId\\\":7,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"userId\\\":1}\"', '\"{\\\"createdAt\\\":\\\"2023-12-29T11:36:32.949Z\\\",\\\"updatedAt\\\":\\\"2023-12-29T11:36:32.949Z\\\",\\\"serviceRequest\\\":\\\"0968a7cd-2e9e-43e6-81bd-f1f0421267e0\\\",\\\"status\\\":0,\\\"id\\\":2,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Admin\\\",\\\"field\\\":\\\"Address3\\\",\\\"originalValue\\\":\\\"Address3_ut\\\",\\\"newValue\\\":\\\"Nearby circle\\\",\\\"mode\\\":\\\"phone\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"comment\\\":\\\"Change in address communication\\\",\\\"cardId\\\":5,\\\"fileMasterId\\\":7,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"userId\\\":1}\"', 1, 1, '2023-12-29 11:36:32', '2023-12-29 11:36:32', 1),
 (4, '4a49ef90-a954-434b-a299-71dba1aad3a8', 3, 5, 7, '\"{\\\"createdAt\\\":\\\"2023-12-29T11:36:32.949Z\\\",\\\"updatedAt\\\":\\\"2023-12-29T11:36:32.949Z\\\",\\\"serviceRequest\\\":\\\"4a49ef90-a954-434b-a299-71dba1aad3a8\\\",\\\"status\\\":0,\\\"id\\\":3,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Holder\\\",\\\"field\\\":\\\"Bureau_Status\\\",\\\"originalValue\\\":\\\"holder\\\",\\\"newValue\\\":\\\"folder\\\",\\\"mode\\\":\\\"sms\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"comment\\\":\\\"Change holder value\\\",\\\"cardId\\\":5,\\\"fileMasterId\\\":7,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"userId\\\":1}\"', '\"{\\\"createdAt\\\":\\\"2023-12-29T11:36:32.949Z\\\",\\\"updatedAt\\\":\\\"2023-12-29T11:36:32.949Z\\\",\\\"serviceRequest\\\":\\\"4a49ef90-a954-434b-a299-71dba1aad3a8\\\",\\\"status\\\":0,\\\"id\\\":3,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Holder\\\",\\\"field\\\":\\\"Bureau_Status\\\",\\\"originalValue\\\":\\\"holder\\\",\\\"newValue\\\":\\\"folder\\\",\\\"mode\\\":\\\"sms\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"comment\\\":\\\"Change holder value\\\",\\\"cardId\\\":5,\\\"fileMasterId\\\":7,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"userId\\\":1}\"', 1, 1, '2023-12-29 11:36:32', '2023-12-29 11:36:32', 1),
 (5, '1cec2eca-ec83-4ff4-ad57-f1438fd66e2d', 1, 1, 9, '\"{\\\"id\\\":1,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Admin\\\",\\\"field\\\":\\\"Address1\\\",\\\"originalValue\\\":\\\"Address1_ut\\\",\\\"newValue\\\":\\\"Higher floor\\\",\\\"mode\\\":\\\"email\\\",\\\"comment\\\":\\\"Rejected\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"serviceRequest\\\":\\\"1cec2eca-ec83-4ff4-ad57-f1438fd66e2d\\\",\\\"status\\\":2,\\\"cardId\\\":1,\\\"fileMasterId\\\":9,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"createdAt\\\":\\\"2023-12-29T09:02:57.000Z\\\",\\\"updatedAt\\\":\\\"2023-12-29T09:02:57.000Z\\\",\\\"userId\\\":1}\"', '\"{\\\"id\\\":1,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Admin\\\",\\\"field\\\":\\\"Address1\\\",\\\"originalValue\\\":\\\"Address1_ut\\\",\\\"newValue\\\":\\\"Higher floor 3\\\",\\\"mode\\\":\\\"sms\\\",\\\"comment\\\":\\\"Re-opened\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"serviceRequest\\\":\\\"1cec2eca-ec83-4ff4-ad57-f1438fd66e2d\\\",\\\"status\\\":2,\\\"cardId\\\":1,\\\"fileMasterId\\\":9,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"createdAt\\\":\\\"2023-12-29T09:02:57.000Z\\\",\\\"updatedAt\\\":\\\"2024-01-06T04:22:20.619Z\\\",\\\"userId\\\":1}\"', 1, 1, '2023-12-29 11:36:32', '2023-12-29 11:36:32', 1),
-(6, '0968a7cd-2e9e-43e6-81bd-f1f0421267e0', 2, 5, 7, '\"{\\\"id\\\":2,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Admin\\\",\\\"field\\\":\\\"Address3\\\",\\\"originalValue\\\":\\\"Address3_ut\\\",\\\"newValue\\\":\\\"Nearby circle\\\",\\\"mode\\\":\\\"phone\\\",\\\"comment\\\":\\\"Change in address communication\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"serviceRequest\\\":\\\"0968a7cd-2e9e-43e6-81bd-f1f0421267e0\\\",\\\"status\\\":0,\\\"cardId\\\":5,\\\"fileMasterId\\\":7,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"createdAt\\\":\\\"2023-12-29T11:36:32.000Z\\\",\\\"updatedAt\\\":\\\"2023-12-29T11:36:32.000Z\\\",\\\"userId\\\":1}\"', '\"{\\\"id\\\":2,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Admin\\\",\\\"field\\\":\\\"Address1\\\",\\\"originalValue\\\":\\\"Address1_et\\\",\\\"newValue\\\":\\\"Nearby circle under construction\\\",\\\"mode\\\":\\\"email\\\",\\\"comment\\\":\\\"Change in address communication\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"serviceRequest\\\":\\\"0968a7cd-2e9e-43e6-81bd-f1f0421267e0\\\",\\\"status\\\":0,\\\"cardId\\\":5,\\\"fileMasterId\\\":7,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"createdAt\\\":\\\"2023-12-29T11:36:32.000Z\\\",\\\"updatedAt\\\":\\\"2024-01-06T04:36:18.346Z\\\",\\\"userId\\\":1}\"', 1, 1, '2024-01-06 04:34:27', '2024-01-06 04:34:27', 1);
+(6, '0968a7cd-2e9e-43e6-81bd-f1f0421267e0', 2, 5, 7, '\"{\\\"id\\\":2,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Admin\\\",\\\"field\\\":\\\"Address3\\\",\\\"originalValue\\\":\\\"Address3_ut\\\",\\\"newValue\\\":\\\"Nearby circle\\\",\\\"mode\\\":\\\"phone\\\",\\\"comment\\\":\\\"Change in address communication\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"serviceRequest\\\":\\\"0968a7cd-2e9e-43e6-81bd-f1f0421267e0\\\",\\\"status\\\":0,\\\"cardId\\\":5,\\\"fileMasterId\\\":7,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"createdAt\\\":\\\"2023-12-29T11:36:32.000Z\\\",\\\"updatedAt\\\":\\\"2023-12-29T11:36:32.000Z\\\",\\\"userId\\\":1}\"', '\"{\\\"id\\\":2,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"Admin\\\",\\\"field\\\":\\\"Address1\\\",\\\"originalValue\\\":\\\"Address1_et\\\",\\\"newValue\\\":\\\"Nearby circle under construction\\\",\\\"mode\\\":\\\"email\\\",\\\"comment\\\":\\\"Change in address communication\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"serviceRequest\\\":\\\"0968a7cd-2e9e-43e6-81bd-f1f0421267e0\\\",\\\"status\\\":0,\\\"cardId\\\":5,\\\"fileMasterId\\\":7,\\\"createdBy\\\":1,\\\"modifiedBy\\\":1,\\\"createdAt\\\":\\\"2023-12-29T11:36:32.000Z\\\",\\\"updatedAt\\\":\\\"2024-01-06T04:36:18.346Z\\\",\\\"userId\\\":1}\"', 1, 1, '2024-01-06 04:34:27', '2024-01-06 04:34:27', 1),
+(7, '8f699fa6-69cc-45b3-8274-4e68b7cd72d4', 4, 2, 7, '\"{\\\"createdAt\\\":\\\"2024-01-25T10:58:28.948Z\\\",\\\"updatedAt\\\":\\\"2024-01-25T10:58:28.948Z\\\",\\\"serviceRequest\\\":\\\"8f699fa6-69cc-45b3-8274-4e68b7cd72d4\\\",\\\"status\\\":0,\\\"id\\\":4,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"bureau 1\\\",\\\"field\\\":\\\"Address1\\\",\\\"originalValue\\\":\\\"Address1_id\\\",\\\"newValue\\\":\\\"New Address\\\",\\\"mode\\\":\\\"email\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"comment\\\":\\\"Change in address\\\",\\\"cardId\\\":2,\\\"fileMasterId\\\":7,\\\"createdBy\\\":5,\\\"modifiedBy\\\":5,\\\"userId\\\":5}\"', '\"{\\\"createdAt\\\":\\\"2024-01-25T10:58:28.948Z\\\",\\\"updatedAt\\\":\\\"2024-01-25T10:58:28.948Z\\\",\\\"serviceRequest\\\":\\\"8f699fa6-69cc-45b3-8274-4e68b7cd72d4\\\",\\\"status\\\":0,\\\"id\\\":4,\\\"action\\\":\\\"newvalue\\\",\\\"changeCommunicatedTo\\\":\\\"bureau 1\\\",\\\"field\\\":\\\"Address1\\\",\\\"originalValue\\\":\\\"Address1_id\\\",\\\"newValue\\\":\\\"New Address\\\",\\\"mode\\\":\\\"email\\\",\\\"ipaddress\\\":\\\"127.0.0.0\\\",\\\"comment\\\":\\\"Change in address\\\",\\\"cardId\\\":2,\\\"fileMasterId\\\":7,\\\"createdBy\\\":5,\\\"modifiedBy\\\":5,\\\"userId\\\":5}\"', 5, 5, '2024-01-25 10:58:28', '2024-01-25 10:58:28', 5);
 
 -- --------------------------------------------------------
 
@@ -330,11 +362,12 @@ INSERT INTO `pullrequest_logs` (`id`, `serviceRequestId`, `pullRequestId`, `card
 --
 
 DROP TABLE IF EXISTS `roles`;
-CREATE TABLE `roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -353,8 +386,8 @@ INSERT INTO `roles` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
 --
 
 DROP TABLE IF EXISTS `userdetails`;
-CREATE TABLE `userdetails` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `userdetails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) DEFAULT NULL,
   `middlename` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
@@ -366,8 +399,12 @@ CREATE TABLE `userdetails` (
   `modifiedBy` int(11) DEFAULT NULL,
   `createdAt` datetime DEFAULT '2023-12-26 09:09:58',
   `updatedAt` datetime DEFAULT '2023-12-26 09:09:58',
-  `userId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `userId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `createdBy` (`createdBy`),
+  KEY `modifiedBy` (`modifiedBy`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `userdetails`
@@ -377,8 +414,9 @@ INSERT INTO `userdetails` (`id`, `firstname`, `middlename`, `lastname`, `address
 (1, 'Aditya', NULL, 'Kumar', 'Temporary address, dummy street, hometown', 999999, NULL, '9999999999', 1, 1, '2023-12-26 06:50:00', '2023-12-26 06:50:00', 1),
 (2, 'HDFC', NULL, 'Banker', 'HDFC Banker,Temporary street, vendor add', 10101, NULL, '5656565656', 1, 1, '2023-12-26 09:09:58', '2023-12-26 09:09:58', 5),
 (3, 'IDFC', NULL, 'Banker', 'IDFC Road, New Street, Penthouse apartment', 222222, 'I\'m a simple banker with no interest in party and pool clubs. Hangout with me on the hills or a calm/serene place like beach', '4545454545', 1, 1, '2023-12-26 09:09:58', '2023-12-26 09:09:58', 6),
-(4, 'Bureau HDFC', NULL, 'Banker', 'Bureau HDFC Road, New Street, Penthouse apartment', 333333, 'I\'m a simple banker with no interest in party and pool clubs. Hangout with me on the hills or a calm/serene place like beach', '1212121212', 2, 2, '2023-12-26 09:09:58', '2023-12-26 09:09:58', 7),
-(5, 'Bureau HDFC', NULL, 'Banker', 'Bureau HDFC Road, New Street, Penthouse apartment', 111222, 'I\'m a simple banker with high interest in party and pool clubs. Hangout with me on the hills or a calm/serene place like beach', '2323232323', 2, 2, '2023-12-26 09:09:58', '2023-12-26 09:09:58', 8);
+(4, 'Bureau HDFC', '', 'Holder', 'Bureau HDFC Road, New Street, Penthouse apartment', 110011, 'I\'m a simple banker with no interest in party and pool clubs. Hangout with me on the hills or a calm/serene place like beach', '2121212121', 2, 1, '2023-12-26 09:09:58', '2024-01-21 14:23:29', 7),
+(5, 'Bureau IDFC', '', 'Holder', 'Bureau HDFC Road, New Street, Penthouse apartment', 111222, 'I\'m a simple banker with high interest in party and pool clubs. Hangout with me on the hills or a calm/serene place like beach', '3434343434', 2, 1, '2023-12-26 09:09:58', '2024-01-21 14:23:29', 8),
+(6, 'Teaser', NULL, 'Trailer', NULL, NULL, NULL, NULL, 1, 1, '2024-01-21 14:30:11', '2024-01-21 14:30:11', 12);
 
 -- --------------------------------------------------------
 
@@ -387,30 +425,32 @@ INSERT INTO `userdetails` (`id`, `firstname`, `middlename`, `lastname`, `address
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `organisation` varchar(255) NOT NULL,
   `type` varchar(10) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `organisation`, `type`, `createdAt`, `updatedAt`) VALUES
-(1, 'admin', 'admin@mlno.in', '$2a$08$/58Hx8qA992Z5F0tSUDbd.gR1QD0tTxS4RTpN.KBEpDsAtXA/liHy', 'HDFC', 'bank', '2023-10-10 19:01:14', '2024-10-17 12:41:14'),
+(1, 'admin', 'admin@mlno.in', '$2a$08$/58Hx8qA992Z5F0tSUDbd.gR1QD0tTxS4RTpN.KBEpDsAtXA/liHy', 'HDFC', 'superadmin', '2023-10-10 19:01:14', '2024-10-17 12:41:14'),
 (2, 'adminr', 'test@test.com', '$2a$08$ncbgbEmP.GDXts0Y1hqthek6uuVFYB2Rx8uPl9oXRvMSbblHELdCS', 'SBI', 'bank', '2023-12-22 11:59:23', '2023-12-22 11:59:23'),
 (3, 'bureau1', 'moderator@test.com', '$2a$08$miheRAZao6NRxc4ktsAOkOqOu1I4vRLRxEg.evz0WK40nDdodqDNi', 'SBI', 'bank', '2023-12-22 12:00:44', '2024-01-02 12:00:44'),
 (4, 'test1', 'test1@test.com', '$2a$08$7p3bWDQBQNl.8wxRkw2.9u5qxvD2PWMHoMMf.FeRK704aLU5z2yuu', 'SBI', 'bank', '2023-12-22 12:01:12', '2023-12-29 12:01:12'),
 (5, 'hdfcadmin', 'hdfcbank@ok.ok', '$2a$08$6OjD95WNm0Ctm2i/XCI3qe.kmi6X1Q0p3vSolWPWcqntHfiAX2Byy', 'HDFC', 'bank', '2024-01-17 08:14:37', '2024-01-17 08:14:37'),
 (6, 'idfcadmin', 'idfcbank@ok.ok', '$2a$08$Gpdv.svtKIPGx1G7IAf.Eu44EghkzBD2gLTvCu2tnmVtDz8K.Hxk.', 'IDFC', 'bank', '2024-01-17 08:14:52', '2024-01-17 09:14:52'),
 (7, 'bureauhdfc', 'bureauhdfc@ok.ok', '$2a$08$XU/Uw8UoGTXeWTlgm61/VupIg85hFbL/WOGnTbF8nHpD9uWsDMql6', 'Bureau1', 'bureau', '2024-01-17 08:15:28', '2024-01-17 09:15:28'),
-(8, 'bureauidfc', 'bureauidfc@ok.ok', '$2a$08$MMaY8T6m2Vdy9AbO6iYakeT2VxOMei1vQICGq8dPmSsMT6afSF4sG', 'Bureau2', 'bureau', '2024-01-17 08:15:36', '2024-01-17 10:15:36');
+(8, 'bureauidfc', 'bureauidfc@ok.ok', '$2a$08$MMaY8T6m2Vdy9AbO6iYakeT2VxOMei1vQICGq8dPmSsMT6afSF4sG', 'Bureau2', 'bureau', '2024-01-17 08:15:36', '2024-01-17 10:15:36'),
+(12, 'teaser', 'dummyuser@demo.ok', '$2a$08$64JrvkhkJgHNB3tyYrBRvu3LY.tQftlsYiYS9onBDEernHNC4acEa', 'SBI', 'bureau', '2024-01-21 14:35:25', '2024-01-21 14:35:25');
 
 -- --------------------------------------------------------
 
@@ -419,11 +459,13 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `organisation`, `typ
 --
 
 DROP TABLE IF EXISTS `user_roles`;
-CREATE TABLE `user_roles` (
+CREATE TABLE IF NOT EXISTS `user_roles` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   `roleId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL
+  `userId` int(11) NOT NULL,
+  PRIMARY KEY (`roleId`,`userId`),
+  KEY `userId` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -438,150 +480,8 @@ INSERT INTO `user_roles` (`createdAt`, `updatedAt`, `roleId`, `userId`) VALUES
 ('2024-01-17 08:14:52', '2024-01-17 08:14:52', 1, 6),
 ('2024-01-17 08:15:28', '2024-01-17 08:15:28', 1, 7),
 ('2024-01-17 08:15:36', '2024-01-17 08:15:36', 1, 8),
+('2024-01-21 14:35:25', '2024-01-21 14:35:25', 1, 12),
 ('2023-12-22 12:00:44', '2023-12-22 12:00:44', 2, 3);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `audit_logs`
---
-ALTER TABLE `audit_logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cardId` (`cardId`),
-  ADD KEY `createdBy` (`createdBy`),
-  ADD KEY `modifiedBy` (`modifiedBy`),
-  ADD KEY `userId` (`userId`);
-
---
--- Indexes for table `cards`
---
-ALTER TABLE `cards`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `createdBy` (`createdBy`),
-  ADD KEY `modifiedBy` (`modifiedBy`),
-  ADD KEY `fileMasterId` (`fileMasterId`),
-  ADD KEY `userId` (`userId`);
-
---
--- Indexes for table `filemasters`
---
-ALTER TABLE `filemasters`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `createdBy` (`createdBy`),
-  ADD KEY `modifiedBy` (`modifiedBy`),
-  ADD KEY `userId` (`userId`);
-
---
--- Indexes for table `menus`
---
-ALTER TABLE `menus`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `menu_roles`
---
-ALTER TABLE `menu_roles`
-  ADD PRIMARY KEY (`roleId`,`menuId`),
-  ADD KEY `menuId` (`menuId`);
-
---
--- Indexes for table `pullrequests`
---
-ALTER TABLE `pullrequests`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cardId` (`cardId`),
-  ADD KEY `fileMasterId` (`fileMasterId`),
-  ADD KEY `createdBy` (`createdBy`),
-  ADD KEY `modifiedBy` (`modifiedBy`),
-  ADD KEY `userId` (`userId`);
-
---
--- Indexes for table `pullrequest_logs`
---
-ALTER TABLE `pullrequest_logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pullRequestId` (`pullRequestId`),
-  ADD KEY `cardId` (`cardId`),
-  ADD KEY `fileMasterId` (`fileMasterId`),
-  ADD KEY `createdBy` (`createdBy`),
-  ADD KEY `modifiedBy` (`modifiedBy`),
-  ADD KEY `userId` (`userId`);
-
---
--- Indexes for table `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `userdetails`
---
-ALTER TABLE `userdetails`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `createdBy` (`createdBy`),
-  ADD KEY `modifiedBy` (`modifiedBy`),
-  ADD KEY `userId` (`userId`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_roles`
---
-ALTER TABLE `user_roles`
-  ADD PRIMARY KEY (`roleId`,`userId`),
-  ADD KEY `userId` (`userId`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `audit_logs`
---
-ALTER TABLE `audit_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `cards`
---
-ALTER TABLE `cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
-
---
--- AUTO_INCREMENT for table `filemasters`
---
-ALTER TABLE `filemasters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT for table `pullrequests`
---
-ALTER TABLE `pullrequests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `pullrequest_logs`
---
-ALTER TABLE `pullrequest_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `userdetails`
---
-ALTER TABLE `userdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
